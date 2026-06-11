@@ -7,6 +7,7 @@ include_directories(C:/en/Emscripten/Release/include)
 
 set(WOTM_SOURCES
 	"src/main.cpp"
+    "src/render.cpp"
 )
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${WOTM_SOURCES})
