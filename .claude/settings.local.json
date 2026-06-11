@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo \"=== port file ===\"; ls C:/en/emsdk/upstream/emscripten/tools/ports/ | grep -i sdl3; echo \"=== sdl3_mixer port contents ===\"; cat C:/en/emsdk/upstream/emscripten/tools/ports/sdl3_mixer.py 2>nul)",
+      "Read(//c/en/emsdk/upstream/emscripten/tools/ports/**)",
+      "Bash(cd C:/en/emsdk/upstream/emscripten; grep -rn \"USE_SDL_MIXER\\\\|USE_SDL_IMAGE\\\\|SDL3_MIXER\\\\|sdl3_mixer\\\\|sdl3_image\" src/settings.js src/settings_internal.js tools/ports/__init__.py tools/settings.py 2>/dev/null | head -40)",
+      "Read(//c/en/emsdk/upstream/emscripten/**)",
+      "Read(//c/en/Emscripten/Release/lib/**)",
+      "Bash(grep -i \"\\\\.a$\\\\|mixer\\\\|SDL\")",
+      "Read(//c/en/Emscripten/Release/**)",
+      "Read(//c/en/Emscripten/**)"
+    ]
+  }
+}

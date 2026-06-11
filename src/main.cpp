@@ -13,11 +13,12 @@ SDL_Renderer *renderer;
 SDL_Texture *texLogo = nullptr;
 TTF_Font *fredoka = nullptr;
 TTF_TextEngine *textEngine = nullptr;
+TTF_Text *slogan = nullptr;
 float i = 0;
 
 static void step(void *userData)
 {
-    SDL_SetRenderDrawColor(renderer, 20, 10, 200, 255);
+    SDL_SetRenderDrawColor(renderer, 10, 15, 20, 255);
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 200, 100, 200, 255);
     SDL_RenderLine(renderer, 256 - 256 * cos(i), 144 - 256 * sin(i), 256 + 256 * cos(i), 144 + 256 * sin(i));
@@ -30,9 +31,7 @@ static void step(void *userData)
 
     if (fredoka != nullptr)
     {
-        const auto& text = TTF_CreateText(textEngine, fredoka, "Liste aller namentlich bekannten Waldfeen", 0);
-        
-        TTF_DrawRendererText(text, 10, 120);
+        TTF_DrawRendererText(slogan, 10, 120);
     }
     
     SDL_RenderDebugText(renderer, 100, 100, "Ahallo");
@@ -49,9 +48,11 @@ void cleanup()
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    TTF_DestroyText(slogan);
     TTF_DestroyRendererTextEngine(textEngine);
     TTF_CloseFont(fredoka);
     TTF_Quit();
+    MIX_Quit();
     SDL_Quit();
 }
 
@@ -124,9 +125,62 @@ int main()
         return 95;
     }
 
+    const auto& sdlVersion = SDL_VERSION;
+    std::cout 
+        << "Engine version SDL " 
+        << SDL_VERSIONNUM_MAJOR(sdlVersion) 
+        << "."
+        << SDL_VERSIONNUM_MINOR(sdlVersion) 
+        << "."
+        << SDL_VERSIONNUM_MICRO(sdlVersion) 
+        << std::endl;
+
+    const auto& imgVersion = IMG_Version();
+    std::cout 
+        << "Image library version SDL " 
+        << SDL_VERSIONNUM_MAJOR(imgVersion) 
+        << "."
+        << SDL_VERSIONNUM_MINOR(imgVersion) 
+        << "."
+        << SDL_VERSIONNUM_MICRO(imgVersion) 
+        << std::endl;
+
+    if (!MIX_Init())
+    {
+        const auto& error = SDL_GetError();
+        SDL_ShowSimpleMessageBox(
+            SDL_MESSAGEBOX_ERROR,
+            "Error",
+            std::format("Failed to initialize audio library: {}", error).c_str(),
+            window
+        );
+
+        cleanup();
+
+        return 94;
+    }
+
+    const auto& mixVersion = MIX_Version();
+    std::cout 
+        << "Audio library version " 
+        << SDL_VERSIONNUM_MAJOR(mixVersion) 
+        << "."
+        << SDL_VERSIONNUM_MINOR(mixVersion) 
+        << "."
+        << SDL_VERSIONNUM_MICRO(mixVersion) 
+        << std::endl;
+
     const auto& ttfVersion = TTF_Version();
-    std::cout << "Font library version " << ttfVersion << std::endl;
-    fredoka = TTF_OpenFont("data/freckleface-regular-show.ttf", 72);
+    std::cout 
+        << "Font library version " 
+        << SDL_VERSIONNUM_MAJOR(ttfVersion) 
+        << "."
+        << SDL_VERSIONNUM_MINOR(ttfVersion) 
+        << "."
+        << SDL_VERSIONNUM_MICRO(ttfVersion) 
+        << std::endl;
+
+    fredoka = TTF_OpenFont("data/freckleface-regular-show.ttf", 32);
     if (fredoka == nullptr)
     {
         const auto& error = SDL_GetError();
@@ -157,6 +211,8 @@ int main()
 
         return 94;
     }
+
+    slogan = TTF_CreateText(textEngine, fredoka, "Liste aller namentlich\nbekannten Waldfeen\n- Holla", 0);
 
     SDL_SetRenderVSync(renderer, 1);
     SDL_SetRenderLogicalPresentation(renderer, 512, 288, SDL_LOGICAL_PRESENTATION_LETTERBOX);
