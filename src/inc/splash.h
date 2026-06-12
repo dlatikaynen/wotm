@@ -3,4 +3,4 @@
 #include "main.h"
 #include "const.h"
 
-extern void step(void *userData);
+extern void splash_step(void *userData);

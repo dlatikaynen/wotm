@@ -9,6 +9,7 @@
 #endif
 
 #include "inc/render.h"
+#include "inc/const.h"
 
 // globals are defined here and declared extern in main.h
 SDL_Window *window;
@@ -22,6 +23,8 @@ TTF_Text *slogan = nullptr;
 TTF_Text *alabel = nullptr;
 TTF_Text *wratho = nullptr;
 float i = 0;
+int screen = 0;
+int dialog = 0;
 
 // audio
 bool isAudioAvailable = false;
@@ -302,6 +305,7 @@ int main()
 
     SDL_SetRenderVSync(renderer, 1);
     SDL_SetRenderLogicalPresentation(renderer, 512, 288, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+    screen = WOTM_SCREEN_SPLASH;
 
 #ifdef __EMSCRIPTEN__
     emscripten_set_main_loop_arg(step, &state, 0, true);

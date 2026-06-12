@@ -10,6 +10,8 @@ extern TTF_Text *slogan;
 extern TTF_Text *alabel;
 extern TTF_Text *wratho;
 extern float i;
+extern int screen;
+extern int dialog;
 
 // fwd decl for main.c
 void cleanup();

@@ -3,11 +3,18 @@ project(wotm)
 
 set(CMAKE_CXX_STANDARD 23)
 
+# We use only plain headers (no import/export). Disable C++20 module scanning so
+# Ninja doesn't drive builds through a dyndep graph whose stale header view can
+# make transitively included declarations (like main.h `extern int screen;`)
+# appear undefined after a header edit
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
+
 include_directories(C:/en/Emscripten/Release/include)
 
 set(WOTM_SOURCES
 	"src/main.cpp"
     "src/render.cpp"
+    "src/splash.cpp"
 )
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${WOTM_SOURCES})
