@@ -15,11 +15,24 @@ void step(void *userData)
         SDL_RenderTexture(renderer, texLogo, &src, &dst);
     }
 
-    if (fredoka != nullptr)
+    if (slogan != nullptr)
     {
+        TTF_SetTextColor(slogan, 139, 139, 139, 255);
         TTF_DrawRendererText(slogan, 10, 120);
     }
-    
+
+    if (wratho != nullptr)
+    {
+        TTF_SetTextColor(wratho, 139, 2, 2, 255);
+        TTF_DrawRendererText(wratho, 50, 5);
+    }
+
+    if (alabel != nullptr)
+    {
+        TTF_SetTextColor(alabel, 2, 2, 229, 255);
+        TTF_DrawRendererText(alabel, 70, 77);
+    }
+
     SDL_RenderDebugText(renderer, 100, 100, "Ahallo");
     SDL_RenderPresent(renderer);
     i += 0.1;

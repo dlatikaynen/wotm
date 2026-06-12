@@ -15,8 +15,12 @@ SDL_Window *window;
 SDL_Renderer *renderer;
 SDL_Texture *texLogo = nullptr;
 TTF_Font *fredoka = nullptr;
+TTF_Font *yoster = nullptr;
+TTF_Font *poppins = nullptr;
 TTF_TextEngine *textEngine = nullptr;
 TTF_Text *slogan = nullptr;
+TTF_Text *alabel = nullptr;
+TTF_Text *wratho = nullptr;
 float i = 0;
 
 // audio
@@ -224,7 +228,39 @@ int main()
         SDL_ShowSimpleMessageBox(
             SDL_MESSAGEBOX_ERROR,
             "Error",
-            std::format("Failed to load font: {}", error).c_str(),
+            std::format("Failed to load freckle font: {}", error).c_str(),
+            window
+        );
+
+        cleanup();
+
+        return 94;
+    }
+
+    yoster = TTF_OpenFont("data/yoster.ttf", 32);
+    if (yoster == nullptr)
+    {
+        const auto& error = SDL_GetError();
+        SDL_ShowSimpleMessageBox(
+            SDL_MESSAGEBOX_ERROR,
+            "Error",
+            std::format("Failed to load yoster font: {}", error).c_str(),
+            window
+        );
+
+        cleanup();
+
+        return 94;
+    }
+
+    poppins = TTF_OpenFont("data/Poppins-Regular.ttf", 12);
+    if (poppins == nullptr)
+    {
+        const auto& error = SDL_GetError();
+        SDL_ShowSimpleMessageBox(
+            SDL_MESSAGEBOX_ERROR,
+            "Error",
+            std::format("Failed to load poppins font: {}", error).c_str(),
             window
         );
 
@@ -249,7 +285,20 @@ int main()
         return 94;
     }
 
-    slogan = TTF_CreateText(textEngine, fredoka, "Liste aller namentlich\nbekannten Waldfeen\n- Holla", 0);
+    if (fredoka != nullptr)
+    {
+        slogan = TTF_CreateText(textEngine, fredoka, "Liste aller namentlich\nbekannten Waldfeen\n- Holla", 0);
+    }
+
+    if (poppins != nullptr)
+    {
+        alabel = TTF_CreateText(textEngine, poppins, "Spielstand laden", 0);
+    }
+
+    if (yoster != nullptr)
+    {
+        wratho = TTF_CreateText(textEngine, yoster, "WRATH of the MILD", 0);
+    }
 
     SDL_SetRenderVSync(renderer, 1);
     SDL_SetRenderLogicalPresentation(renderer, 512, 288, SDL_LOGICAL_PRESENTATION_LETTERBOX);
@@ -272,9 +321,13 @@ void cleanup()
 
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
+    TTF_DestroyText(wratho);
+    TTF_DestroyText(alabel);
     TTF_DestroyText(slogan);
     TTF_DestroyRendererTextEngine(textEngine);
     TTF_CloseFont(fredoka);
+    TTF_CloseFont(yoster);
+    TTF_CloseFont(poppins);
     TTF_Quit();
     MIX_Quit();
     SDL_Quit();
