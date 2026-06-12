@@ -9,6 +9,8 @@ set(CMAKE_CXX_STANDARD 23)
 # appear undefined after a header edit
 set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 
+# cairo is prebuilt for wasm (image surface + freetype backend) and installed into
+# C:/en/Emscripten/Release alongside pixman/freetype. See deps/build-cairo.cmd
 include_directories(C:/en/Emscripten/Release/include)
 
 set(WOTM_SOURCES
@@ -18,9 +20,7 @@ set(WOTM_SOURCES
 )
 
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${WOTM_SOURCES})
-
 add_executable(wotm ${WOTM_SOURCES})
-
 set_target_properties(wotm PROPERTIES
     VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
 )
@@ -30,18 +30,26 @@ set_target_properties(wotm PROPERTIES
     VS_PROJECT_IMPORT_DIR "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
-target_link_options(wotm PRIVATE
+target_link_options(
+    wotm PRIVATE
     "-sUSE_SDL=3"
     "-sUSE_SDL_TTF=3"
+    "-sUSE_ZLIB=1"
 )
 
 # Emscripten has no sdl3_mixer or sdl3_image port (only sdl3 + sdl3_ttf exist), so
 # -sUSE_SDL_MIXER=3 / -sUSE_SDL_IMAGE=3 are silently ignored. Link our own wasm builds
 # instead. They must come BEFORE the SDL=3 port on the link line so wasm-ld resolves
 # MIX_*/IMG_* here and their SDL_* deps fall through to the port.
-target_link_libraries(wotm PRIVATE
+target_link_libraries(
+    wotm PRIVATE
     C:/en/Emscripten/Release/lib/libSDL3_image.a
-    C:/en/Emscripten/Release/lib/libSDL3_mixer.a)
+    C:/en/Emscripten/Release/lib/libSDL3_mixer.a
+    # cairo must precede pixman/freetype
+    C:/en/Emscripten/Release/lib/libcairo.a
+    C:/en/Emscripten/Release/lib/libpixman-1.a
+    C:/en/Emscripten/Release/lib/libfreetype.a
+)
 
 if (EMSCRIPTEN)
     message(STATUS "Configuring Emscripten-specific flags")

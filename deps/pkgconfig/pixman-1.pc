@@ -1,0 +1,7 @@
+# Absolute paths (no ${prefix}) on purpose: pkgconf relocates ${prefix} based on
+# this file's directory, which would point it at the wotm tree instead of Release.
+Name: Pixman
+Description: The pixman library (version 1)
+Version: 0.44.2
+Libs: -LC:/en/Emscripten/Release/lib -lpixman-1
+Cflags: -IC:/en/Emscripten/Release/include/pixman-1

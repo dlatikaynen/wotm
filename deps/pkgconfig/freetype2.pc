@@ -1,0 +1,10 @@
+# Absolute paths (no ${prefix}) on purpose: pkgconf would otherwise relocate
+# ${prefix} based on this file's directory. See pixman-1.pc for details.
+Name: FreeType 2
+Description: A free, high-quality, and portable font engine.
+# libtool-style version (release 2.14.x). Satisfies cairo's >= 23.0.17 gate and
+# the >= 25.0.19 COLRv1 gate. No Requires: line so pkg-config needs no zlib.pc;
+# freetype's own deps resolve at the final wotm wasm link, not during cairo build.
+Version: 26.6.20
+Libs: -LC:/en/Emscripten/Release/lib -lfreetype
+Cflags: -IC:/en/Emscripten/Release/include/freetype2
