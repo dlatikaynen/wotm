@@ -1,4 +1,5 @@
 build/*
 build-em/*
 .vscode/*
+.claude/*
 CMakeFiles/*
