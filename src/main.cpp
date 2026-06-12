@@ -10,6 +10,7 @@
 
 #include "inc/render.h"
 
+// globals are defined here and declared extern in main.h
 SDL_Window *window;
 SDL_Renderer *renderer;
 SDL_Texture *texLogo = nullptr;
@@ -18,22 +19,11 @@ TTF_TextEngine *textEngine = nullptr;
 TTF_Text *slogan = nullptr;
 float i = 0;
 
-void cleanup()
-{
-    if (texLogo != nullptr)
-    {
-        SDL_DestroyTexture(texLogo);
-    }
-
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    TTF_DestroyText(slogan);
-    TTF_DestroyRendererTextEngine(textEngine);
-    TTF_CloseFont(fredoka);
-    TTF_Quit();
-    MIX_Quit();
-    SDL_Quit();
-}
+// audio
+bool isAudioAvailable = false;
+static MIX_Mixer* mixer = nullptr;
+static void* audioData1 = nullptr;
+static MIX_Track* track1 = nullptr;
 
 int main()
 {
@@ -124,7 +114,85 @@ int main()
         << SDL_VERSIONNUM_MICRO(imgVersion) 
         << std::endl;
 
-    if (!MIX_Init())
+    if (MIX_Init())
+    {
+        isAudioAvailable = true;
+        
+        MIX_Audio* music = nullptr;
+        MIX_Audio* sound = nullptr;
+
+        const auto& mixVersion = MIX_Version();
+        std::cout 
+            << "Audio library version " 
+            << SDL_VERSIONNUM_MAJOR(mixVersion) 
+            << "."
+            << SDL_VERSIONNUM_MINOR(mixVersion) 
+            << "."
+            << SDL_VERSIONNUM_MICRO(mixVersion) 
+            << std::endl;
+
+        mixer = MIX_CreateMixerDevice(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, NULL);
+        if (!mixer)
+        {
+            std::cout
+                << "Could not create audio mixer: "
+                << SDL_GetError()
+                << "\n";
+            
+            isAudioAvailable = false;
+        }
+
+        music = MIX_LoadAudio(mixer, "data/560446__migfus20__happy-background-music.mp3", false);
+        if (!music) 
+        {
+            std::cout
+                << "Failed to load background music: "
+                << SDL_GetError()
+                << "\n";
+
+            isAudioAvailable = false;
+        }
+
+        track1 = MIX_CreateTrack(mixer);
+        if (!track1)
+        {
+            std::cout
+                << "Could not create a mixer track: "
+                << SDL_GetError()
+                << "\n";
+            
+            isAudioAvailable = false;
+        }
+
+        if (isAudioAvailable)
+        {
+            MIX_SetTrackAudio(track1, music);
+            MIX_SetTrackGain(track1, 0);
+            const auto options = SDL_CreateProperties();
+
+            if (!options)
+            {
+                std::cout
+                    << "Could not create audio playback options: "
+                    << SDL_GetError()
+                    << "\n";
+                
+                isAudioAvailable = false;
+            }
+
+            if (isAudioAvailable)
+            {
+                /* loop forever */
+                SDL_SetNumberProperty(options, MIX_PROP_PLAY_LOOPS_NUMBER, -1);
+
+                /* start the audio playing */
+                MIX_PlayTrack(track1, options);
+                SDL_DestroyProperties(options);
+                MIX_SetTrackGain(track1, 0.8);
+            }
+        }
+    }
+    else
     {
         const auto& error = SDL_GetError();
         SDL_ShowSimpleMessageBox(
@@ -138,16 +206,6 @@ int main()
 
         return 94;
     }
-
-    const auto& mixVersion = MIX_Version();
-    std::cout 
-        << "Audio library version " 
-        << SDL_VERSIONNUM_MAJOR(mixVersion) 
-        << "."
-        << SDL_VERSIONNUM_MINOR(mixVersion) 
-        << "."
-        << SDL_VERSIONNUM_MICRO(mixVersion) 
-        << std::endl;
 
     const auto& ttfVersion = TTF_Version();
     std::cout 
@@ -203,4 +261,21 @@ int main()
     cleanup();
 
     return 0;
+}
+
+void cleanup()
+{
+    if (texLogo != nullptr)
+    {
+        SDL_DestroyTexture(texLogo);
+    }
+
+    SDL_DestroyRenderer(renderer);
+    SDL_DestroyWindow(window);
+    TTF_DestroyText(slogan);
+    TTF_DestroyRendererTextEngine(textEngine);
+    TTF_CloseFont(fredoka);
+    TTF_Quit();
+    MIX_Quit();
+    SDL_Quit();
 }

@@ -8,3 +8,6 @@ extern TTF_Font *fredoka;
 extern TTF_TextEngine *textEngine;
 extern TTF_Text *slogan;
 extern float i;
+
+// fwd decl for main.c
+void cleanup();
