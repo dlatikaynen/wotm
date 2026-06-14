@@ -1,0 +1,14 @@
+
+LEVEL (1) H Hydrogen
+
+The center of the screen is a gravity mirror. 
+The level looks like a meadow with sky on both sides.
+On the outermost left and right corners, the ground forms two perfect circles.
+The interiors are hollow and contain the nucleus symbols (both viewer's-perspective "up")
+On the exteriors there is the electron spin indicator ("up" in both players' perspectice, but
+left-down and right-up)
+Player 1 stands upside-down on the left and shoots "upwards"
+Player 2 stands normally on the right and shoots "downwards".
+If any player's projectile penetrates the "horizon", its perceived gravity inverts.
+Players are immobile.
+

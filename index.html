@@ -145,8 +145,7 @@
       <div class=emscripten id=status>Downloading...</div>
     </div>
     <div class="emscripten" id=fullscreenbutton_container><input type=button
-          onclick='Module.requestFullscreen(true,document.getElementById("resize").checked)'
-          value=Fullscreen></div>
+        onclick='Module.requestFullscreen(true,document.getElementById("resize").checked)' value=Fullscreen></div>
     <span id=controls style="display:none"><span><input type=checkbox id=resize>Resize
         canvas</span> <span><input type=checkbox id=pointerLock checked>Lock/hide mouse
         pointer    </span></span>
@@ -155,20 +154,38 @@
         tabindex=-1></canvas></div><textarea id=output rows=8></textarea>
     <script>
       var statusElement = document.getElementById("status"),
-       progressElement = document.getElementById("progress"),
-       spinnerElement = document.getElementById("spinner"),
-       canvasElement = document.getElementById("canvas"),
-       outputElement = document.getElementById("output");
-       
-       outputElement && (outputElement.value = ""),
-       canvasElement.addEventListener("webglcontextlost", 
-       (e => { alert("WebGL context lost. You will need to reload the page."), e.preventDefault() }), !1);
-       
-       var setStatus = e => {
-         if (setStatus.last || (setStatus.last = { time: Date.now(), text: "" }),
-         e !== setStatus.last.text) {
-           var t = e.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/), n = Date.now(); 
-           t && n - setStatus.last.time < 30 || (setStatus.last.time = n, setStatus.last.text = e, t ? (e = t[1], progressElement.value = 100 * parseInt(t[2]), progressElement.max = 100 * parseInt(t[4]), progressElement.hidden = !1, spinnerElement.hidden = !1) : (progressElement.value = null, progressElement.max = null, progressElement.hidden = !0, e || (spinnerElement.style.display = "none")), statusElement.innerHTML = e) } }, Module = { print(...e) { if (console.log(...e), outputElement) { var t = e.join(" "); outputElement.value += t + "\n", outputElement.scrollTop = outputElement.scrollHeight } }, canvas: canvasElement, setStatus: setStatus, totalDependencies: 0, monitorRunDependencies(e) { this.totalDependencies = Math.max(this.totalDependencies, e), setStatus(e ? "Preparing... (" + (this.totalDependencies - e) + "/" + this.totalDependencies + ")" : "All downloads complete.") } }; setStatus("Downloading..."), window.onerror = e => { setStatus("Exception thrown, see JavaScript console"), spinnerElement.style.display = "none", setStatus = e => { e && console.error("[post-exception status] " + e) } }</script>
+        progressElement = document.getElementById("progress"),
+        spinnerElement = document.getElementById("spinner"),
+        canvasElement = document.getElementById("canvas"),
+        outputElement = document.getElementById("output");
+
+      outputElement && (outputElement.value = ""),
+        canvasElement.addEventListener("webglcontextlost",
+          (e => { alert("WebGL context lost. You will need to reload the page."), e.preventDefault() }), !1);
+
+      var setStatus = e => {
+        if (setStatus.last || (setStatus.last = { time: Date.now(), text: "" }),
+          e !== setStatus.last.text) {
+          var t = e.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/), n = Date.now();
+          t && n - setStatus.last.time < 30 || (setStatus.last.time = n, setStatus.last.text = e, t ? (e = t[1], progressElement.value = 100 * parseInt(t[2]), progressElement.max = 100 * parseInt(t[4]), progressElement.hidden = !1, spinnerElement.hidden = !1) : (progressElement.value = null, progressElement.max = null, progressElement.hidden = !0, e || (spinnerElement.style.display = "none")), statusElement.innerHTML = e)
+        }
+      }, Module = { print(...e) { if (console.log(...e), outputElement) { var t = e.join(" "); outputElement.value += t + "\n", outputElement.scrollTop = outputElement.scrollHeight } }, canvas: canvasElement, setStatus: setStatus, totalDependencies: 0, monitorRunDependencies(e) { this.totalDependencies = Math.max(this.totalDependencies, e), setStatus(e ? "Preparing... (" + (this.totalDependencies - e) + "/" + this.totalDependencies + ")" : "All downloads complete.") } }; setStatus("Downloading..."), window.onerror = e => { setStatus("Exception thrown, see JavaScript console"), spinnerElement.style.display = "none", setStatus = e => { e && console.error("[post-exception status] " + e) } }</script>
+    <script>
+      // dev live reload
+      (function () {
+        var last = null;
+        setInterval(function () {
+          fetch("wotm.wasm", { method: "HEAD", cache: "no-store" })
+            .then(function (r) {
+              var stamp = r.headers.get("last-modified") || r.headers.get("etag");
+              if (!stamp) return;
+              if (last && stamp !== last) location.reload();
+              last = stamp;
+            })
+            .catch(function () { });
+        }, 1000);
+      })();
+    </script>
     <script async src="wotm.js"></script>
   </body>
 

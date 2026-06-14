@@ -5,6 +5,7 @@ extern SDL_Window *window;
 extern SDL_Renderer *renderer;
 extern SDL_Texture *texLogo;
 extern SDL_Texture *texLogoGray;
+extern SDL_Texture *texLogoSm;
 extern TTF_Font *fredoka;
 extern TTF_TextEngine *textEngine;
 extern TTF_Text *slogan;

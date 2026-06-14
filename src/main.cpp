@@ -17,6 +17,7 @@ SDL_Window *window;
 SDL_Renderer *renderer;
 SDL_Texture *texLogo = nullptr;
 SDL_Texture *texLogoGray = nullptr;
+SDL_Texture *texLogoSm = nullptr;
 TTF_Font *fredoka = nullptr;
 TTF_Font *yoster = nullptr;
 TTF_Font *poppins = nullptr;
@@ -66,11 +67,11 @@ int main()
     }
 
     size_t fileSize;
-    const auto& imageSurface = SDL_LoadPNG("data/logo-ki-064.png");
+    auto imageSurface = SDL_LoadPNG("data/logo-ki-064.png");
 
     if (imageSurface == nullptr)
     {
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Failed to load image resource", window);
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Failed to load logo image resource", window);
         cleanup();
 
         return 96;
@@ -79,14 +80,34 @@ int main()
     texLogo = SDL_CreateTextureFromSurface(renderer, imageSurface);
     if (texLogo == nullptr)
     {
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Failed to create texture from image", window);
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Failed to create texture from logo image", window);
         cleanup();
 
-        return 96;
+        return 95;
     }
 
     texLogoGray = make_grayscale_texture(renderer, imageSurface);
     std::cout << "Loaded logo (" << imageSurface->w << " x " << imageSurface->h << ")" << std::endl;
+    SDL_DestroySurface(imageSurface);
+    imageSurface = SDL_LoadPNG("data/logo-ki-032.png");
+    if (imageSurface == nullptr)
+    {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Failed to load small logo image resource", window);
+        cleanup();
+
+        return 94;
+    }
+
+    texLogoSm = SDL_CreateTextureFromSurface(renderer, imageSurface);
+    if (texLogoSm == nullptr)
+    {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Failed to create texture from small logo image", window);
+        cleanup();
+
+        return 93;
+    }
+
+    std::cout << "Loaded small logo (" << imageSurface->w << " x " << imageSurface->h << ")" << std::endl;
     SDL_DestroySurface(imageSurface);
 
     if (!TTF_Init())
@@ -101,7 +122,7 @@ int main()
 
         cleanup();
 
-        return 95;
+        return 92;
     }
 
     const auto& sdlVersion = SDL_VERSION;
@@ -214,7 +235,7 @@ int main()
 
         cleanup();
 
-        return 94;
+        return 91;
     }
 
     const auto& ttfVersion = TTF_Version();
@@ -240,7 +261,7 @@ int main()
 
         cleanup();
 
-        return 94;
+        return 90;
     }
 
     yoster = TTF_OpenFont("data/yoster.ttf", 32);
@@ -256,7 +277,7 @@ int main()
 
         cleanup();
 
-        return 94;
+        return 89;
     }
 
     poppins = TTF_OpenFont("data/Poppins-Regular.ttf", 12);
@@ -272,7 +293,7 @@ int main()
 
         cleanup();
 
-        return 94;
+        return 88;
     }
 
     textEngine = TTF_CreateRendererTextEngine(renderer);
@@ -288,7 +309,7 @@ int main()
 
         cleanup();
 
-        return 94;
+        return 87;
     }
 
     if (fredoka != nullptr)
@@ -303,7 +324,7 @@ int main()
 
     if (yoster != nullptr)
     {
-        wratho = TTF_CreateText(textEngine, yoster, "WRATH of the MILD", 0);
+        wratho = TTF_CreateText(textEngine, yoster, "Scorch Gore!", 0);
     }
 
     SDL_SetRenderVSync(renderer, 1);
@@ -324,6 +345,11 @@ void cleanup()
     if (texLogo != nullptr)
     {
         SDL_DestroyTexture(texLogo);
+    }
+
+    if (texLogoSm != nullptr)
+    {
+        SDL_DestroyTexture(texLogoSm);
     }
 
     if (texLogoGray != nullptr)

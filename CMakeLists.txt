@@ -11,7 +11,14 @@ set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 
 # cairo is prebuilt for wasm (image surface + freetype backend) and installed into
 # C:/en/Emscripten/Release alongside pixman/freetype. See deps/build-cairo.cmd
-include_directories(C:/en/Emscripten/Release/include)
+# the cairo/ and freetype2/ subdirs hold the actual headers (cairo.h, cairo-ft.h,
+# ft2build.h + FT_FREETYPE_H), so they go on the include path directly - this is
+# what cairo's pkg-config would have emitted (-I.../cairo -I.../freetype2)
+include_directories(
+    C:/en/Emscripten/Release/include
+    C:/en/Emscripten/Release/include/cairo
+    C:/en/Emscripten/Release/include/freetype2
+)
 
 # glob all .cpp under src/ so new files are picked up without editing this list
 # CONFIGURE_DEPENDS makes the build re-run the glob when files are added/removed
