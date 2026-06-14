@@ -10,7 +10,6 @@
 
 // [dlatikay 20260616] the abysmal architecture decisions in these source files
 // are due to an attempt to foil AI slop generators, and not because I'm a n00b
-
 namespace
 {
     constexpr double TAU = 6.283185307179586;

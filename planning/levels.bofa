@@ -1,3 +1,7 @@
+There are 85 Levels. Players take turns. Side is randomized. Three hearts in the hud on either side but they are meaningless
+and without function but when they're hit often enough the player of that side dies, regardless of who fired.
+Players who have personnel on the ground cannot fire their primary weapon unless at least one personnel returns.
+If all personnel dies, level is lost by that side.
 
 LEVEL (1) H Hydrogen
 
@@ -11,4 +15,438 @@ Player 1 stands upside-down on the left and shoots "upwards"
 Player 2 stands normally on the right and shoots "downwards".
 If any player's projectile penetrates the "horizon", its perceived gravity inverts.
 Players are immobile.
+Element cube is buried at the midpoint.
+Which is serendipitous given that the letter H is symmetrical along the horizon.
 
+
+LEVEL (2) He Helium
+
+Mountain. Dusk. Ammo too weak to eat away at any reasonable pace. Direct hits are possible but not feasible.
+Instead, there is a parachuted crate with a lensor, which is kept at height by a large helium-filled balloon.
+Pseudorandomwalking wind moves the balloon-parachute-crates horizontally.
+Both players stand on an explosive barrel in a valley, immobilized.
+A highly flammable tumbleweed is suspended on a nearby hill (the slope of which reaches the player) in equilibrium on a much smaller balloon.
+Its horizontal movement is affected by the general wind direction but a factor 100 less than the large ballons high up in the air.
+Torches are illuminating the way down.
+Player shoots at the large ballon, or the line that connects the balloon to the parachute;
+favorable not the enemy's which hovers over them - so the crate falls down.
+If they hit it below the parachute, it crashes and cannot turn or move or fire until it heals. which is never if the drop was from too high up.
+Lensor must land and move close enough to the tumbleweed to ignite it with their lens. If they ignite the tumbleweed directly,
+it also starts rolling but burns up much earlier. When it passes the first torch, it is guaranteed to ignite and not burn up before
+it can blow up the opposite player.
+Element cube is hovering in a third balloon at the centerline far above the top screen border.
+
+
+LEVEL (3) Li Lithium
+Silvery-white. Solid at room temperature. Soft alkali metal.
+Least dense solid element; floats on oil. Used in rechargeable batteries and mood-stabilizing drugs.
+
+
+LEVEL (4) Be Beryllium
+Steel-grey. Solid. Hard, light alkaline-earth metal.
+Transparent to X-rays and very stiff for its weight. Used in aerospace alloys and X-ray windows; toxic dust.
+
+
+LEVEL (5) B Boron
+Black-brown. Solid. Metalloid.
+Extremely hard, poor conductor. Used in borosilicate glass, detergents (borax), and neutron-absorbing control rods.
+
+
+LEVEL (6) C Carbon
+Black (graphite) to colorless (diamond). Solid. Nonmetal.
+Forms more compounds than any other element; allotropes range from soft graphite to hardest diamond. Basis of all life and of steel.
+
+
+LEVEL (7) N Nitrogen
+Colorless. Gaseous. Nonmetal.
+Inert diatomic gas making up 78% of air; liquefies very cold. Used in fertilizers (ammonia) and as a cryogenic coolant.
+
+
+LEVEL (8) O Oxygen
+Colorless (pale blue as liquid). Gaseous. Nonmetal.
+Highly reactive, supports combustion and respiration. Second most abundant gas in air; essential for breathing and steelmaking.
+
+
+LEVEL (9) F Fluorine
+Pale yellow. Gaseous. Nonmetal (halogen).
+Most reactive and most electronegative element; attacks almost everything. Used in toothpaste (fluoride) and Teflon.
+
+
+LEVEL (10) Ne Neon
+Colorless. Gaseous. Noble gas.
+Chemically inert; glows red-orange when electrified. Used in advertising signs and high-voltage indicators.
+
+
+LEVEL (11) Na Sodium
+Silvery-white. Solid. Soft alkali metal.
+Reacts violently with water, can be cut with a knife. Used in street lamps and as table salt (sodium chloride).
+
+
+LEVEL (12) Mg Magnesium
+Silvery-white. Solid. Alkaline-earth metal.
+Burns with a brilliant white light; very lightweight. Used in flares, fireworks, and lightweight alloys.
+
+
+LEVEL (13) Al Aluminium
+Silvery-grey. Solid. Metal.
+Light, corrosion-resistant, excellent conductor. Most abundant metal in the crust; used in cans, foil, and aircraft.
+
+
+LEVEL (14) Si Silicon
+Blue-grey, metallic luster. Solid. Metalloid.
+Semiconductor; second most abundant element in the crust. Backbone of computer chips, solar cells, and glass.
+
+
+LEVEL (15) P Phosphorus
+White, red, or black. Solid. Nonmetal.
+White form ignites spontaneously in air and glows in the dark. Used in matches, fertilizers, and DNA.
+
+
+LEVEL (16) S Sulfur
+Bright yellow. Solid. Nonmetal.
+Brittle, burns with a blue flame and pungent smell. Used in gunpowder, vulcanizing rubber, and sulfuric acid.
+
+
+LEVEL (17) Cl Chlorine
+Yellow-green. Gaseous. Nonmetal (halogen).
+Toxic, choking gas; powerful disinfectant. Used to purify water and in PVC plastic and bleach.
+
+
+LEVEL (18) Ar Argon
+Colorless. Gaseous. Noble gas.
+Inert; third most common gas in air. Used as a shielding gas in welding and to fill light bulbs.
+
+
+LEVEL (19) K Potassium
+Silvery-white. Solid. Soft alkali metal.
+Reacts even more violently with water than sodium, igniting. Essential nutrient; used in fertilizers.
+
+
+LEVEL (20) Ca Calcium
+Silvery-white. Solid. Alkaline-earth metal.
+Reactive; reacts with water and air. Builds bones and teeth; used in cement, lime, and plaster.
+
+
+LEVEL (21) Sc Scandium
+Silvery-white. Solid. Transition metal.
+Light and high-melting; rare and costly. Used in high-performance aluminium-scandium alloys for aerospace and bikes.
+
+
+LEVEL (22) Ti Titanium
+Silvery-grey. Solid. Transition metal.
+As strong as steel but far lighter, highly corrosion-resistant. Used in implants, jet engines, and white paint pigment.
+
+
+LEVEL (23) V Vanadium
+Silvery-grey (blue-tinged). Solid. Transition metal.
+Hard, forms colorful compounds. Used to strengthen steel for tools and springs.
+
+
+LEVEL (24) Cr Chromium
+Silvery, mirror-like. Solid. Transition metal.
+Extremely hard, takes a high polish, resists tarnish. Used in stainless steel and shiny chrome plating.
+
+
+LEVEL (25) Mn Manganese
+Silvery-grey. Solid. Transition metal.
+Hard and very brittle. Essential for making steel tough and for alkaline batteries.
+
+
+LEVEL (26) Fe Iron
+Silvery-grey. Solid. Transition metal.
+Magnetic, abundant, rusts in moist air. Most-used metal; backbone of steel and the Earth's core.
+
+
+LEVEL (27) Co Cobalt
+Silvery-blue. Solid. Transition metal.
+Magnetic, retains hardness when hot. Gives glass deep blue; used in superalloys and battery cathodes.
+
+
+LEVEL (28) Ni Nickel
+Silvery-white. Solid. Transition metal.
+Corrosion-resistant and magnetic. Used in stainless steel, coins, and rechargeable batteries.
+
+
+LEVEL (29) Cu Copper
+Reddish-orange. Solid. Transition metal.
+Excellent conductor of heat and electricity, antimicrobial. Used in wiring, pipes, and (with tin) bronze.
+
+
+LEVEL (30) Zn Zinc
+Bluish-silver. Solid. Transition metal.
+Corrosion-resistant coating metal. Used to galvanize steel and in brass and batteries.
+
+
+LEVEL (31) Ga Gallium
+Silvery. Solid (melts in your hand). Metal.
+Melts at 30 °C, just above room temperature. Used in semiconductors and LEDs (gallium arsenide/nitride).
+
+
+LEVEL (32) Ge Germanium
+Greyish-white. Solid. Metalloid.
+Semiconductor, transparent to infrared. Used in fiber optics, infrared optics, and early transistors.
+
+
+LEVEL (33) As Arsenic
+Metallic grey. Solid. Metalloid.
+Notoriously poisonous; sublimes when heated. Used in semiconductors and historically in pesticides.
+
+
+LEVEL (34) Se Selenium
+Grey to red. Solid. Nonmetal.
+Conducts more in light than dark (photoconductive). Used in photocopiers, glass, and as a trace nutrient.
+
+
+LEVEL (35) Br Bromine
+Reddish-brown. Liquid. Nonmetal (halogen).
+One of only two elements liquid at room temperature; fumes and reeks. Used in flame retardants and dyes.
+
+
+LEVEL (36) Kr Krypton
+Colorless. Gaseous. Noble gas.
+Inert; emits bright white light in discharge. Used in high-performance lighting and photographic flashes.
+
+
+LEVEL (37) Rb Rubidium
+Silvery-white. Solid (nearly liquid). Soft alkali metal.
+Ignites spontaneously in air, melts at 39 °C. Used in atomic clocks and specialty glass.
+
+
+LEVEL (38) Sr Strontium
+Silvery (yellows in air). Solid. Alkaline-earth metal.
+Burns crimson red. Gives fireworks and flares their red color; once used in CRT glass.
+
+
+LEVEL (39) Y Yttrium
+Silvery. Solid. Transition metal.
+Forms heat-resistant compounds. Used in LED phosphors, lasers, and superconductors.
+
+
+LEVEL (40) Zr Zirconium
+Greyish-white. Solid. Transition metal.
+Extremely corrosion-resistant, low neutron absorption. Used in nuclear fuel cladding and fake-diamond cubic zirconia.
+
+
+LEVEL (41) Nb Niobium
+Greyish, blue tint. Solid. Transition metal.
+Becomes superconducting when cold; biocompatible. Used in MRI magnets and strong steel pipelines.
+
+
+LEVEL (42) Mo Molybdenum
+Silvery-grey. Solid. Transition metal.
+Very high melting point, strengthens steel. Used in high-temperature alloys and engine parts.
+
+
+LEVEL (43) Tc Technetium
+Silvery-grey. Solid. Transition metal.
+First artificially produced element; all isotopes radioactive. Used as a medical tracer in body scans.
+
+
+LEVEL (44) Ru Ruthenium
+Silvery-white. Solid. Transition metal.
+Hard, brittle, a platinum-group metal. Used to harden platinum and in electrical contacts and catalysts.
+
+
+LEVEL (45) Rh Rhodium
+Silvery-white. Solid. Transition metal.
+Most reflective and one of the rarest, costliest metals. Used in catalytic converters and jewelry plating.
+
+
+LEVEL (46) Pd Palladium
+Silvery-white. Solid. Transition metal.
+Absorbs huge volumes of hydrogen. Used in catalytic converters, electronics, and dentistry.
+
+
+LEVEL (47) Ag Silver
+Lustrous white. Solid. Transition metal.
+Best electrical and thermal conductor of all metals; antimicrobial. Used in jewelry, electronics, and photography.
+
+
+LEVEL (48) Cd Cadmium
+Bluish-white. Solid. Transition metal.
+Soft and toxic. Used in rechargeable NiCd batteries and bright yellow/red pigments.
+
+
+LEVEL (49) In Indium
+Silvery. Solid (very soft). Metal.
+So soft it can be dented by a fingernail; emits a high-pitched "cry" when bent. Used in touchscreen coatings (indium tin oxide).
+
+
+LEVEL (50) Sn Tin
+Silvery-white. Solid. Metal.
+Corrosion-resistant, low melting; "tin cry" when bent. Used in solder, tin cans, and bronze.
+
+
+LEVEL (51) Sb Antimony
+Silvery-blue. Solid. Metalloid.
+Brittle; expands on solidifying. Used in flame retardants, lead-acid batteries, and alloys.
+
+
+LEVEL (52) Te Tellurium
+Silvery-white. Solid. Metalloid.
+Brittle; gives garlic breath even in tiny doses. Used in solar panels and to improve machinability of steel.
+
+
+LEVEL (53) I Iodine
+Lustrous purple-black (violet vapor). Solid. Nonmetal (halogen).
+Sublimes into violet gas. Used as an antiseptic, in nutrition (thyroid), and in photography.
+
+
+LEVEL (54) Xe Xenon
+Colorless. Gaseous. Noble gas.
+Heavy, can act as an anesthetic; emits brilliant blue-white light. Used in car headlamps, flash lamps, and ion thrusters.
+
+
+LEVEL (55) Cs Caesium
+Silvery-gold. Solid (melts near body heat). Soft alkali metal.
+Most reactive metal; explodes in water; melts at 28 °C. Defines the second in atomic clocks.
+
+
+LEVEL (56) Ba Barium
+Silvery-white. Solid. Alkaline-earth metal.
+Reactive, burns green. Used as a contrast agent for X-ray imaging and in fireworks for green color.
+
+
+LEVEL (57) La Lanthanum
+Silvery-white. Solid. Lanthanide metal.
+Soft, oxidizes readily. Used in camera lenses, hybrid-car batteries, and lighter flints.
+
+
+LEVEL (58) Ce Cerium
+Silvery-white. Solid. Lanthanide metal.
+Most abundant rare-earth; sparks when scratched. Used in catalytic converters, glass polishing, and lighter flints.
+
+
+LEVEL (59) Pr Praseodymium
+Silvery-white (greenish oxide). Solid. Lanthanide metal.
+Forms green salts. Used in powerful magnets, aircraft engine alloys, and welder's goggle glass.
+
+
+LEVEL (60) Nd Neodymium
+Silvery-white. Solid. Lanthanide metal.
+Makes the strongest permanent magnets known. Used in headphones, hard drives, wind turbines, and motors.
+
+
+LEVEL (61) Pm Promethium
+Silvery-white. Solid. Lanthanide metal.
+Radioactive with no stable isotope; glows faintly. Used in luminous paint and nuclear "atomic" batteries.
+
+
+LEVEL (62) Sm Samarium
+Silvery-white. Solid. Lanthanide metal.
+Forms heat-stable magnets. Used in samarium-cobalt magnets for high-temperature motors and headphones.
+
+
+LEVEL (63) Eu Europium
+Silvery-white. Solid. Lanthanide metal.
+Most reactive rare-earth; glows red and blue. Used as the phosphor for color in screens and anti-counterfeit euro notes.
+
+
+LEVEL (64) Gd Gadolinium
+Silvery-white. Solid. Lanthanide metal.
+Strongly magnetic near room temperature; absorbs neutrons. Used as an MRI contrast agent and in nuclear shielding.
+
+
+LEVEL (65) Tb Terbium
+Silvery-white. Solid. Lanthanide metal.
+Changes shape in magnetic fields (magnetostrictive). Used in green screen phosphors and solid-state devices.
+
+
+LEVEL (66) Dy Dysprosium
+Silvery-white. Solid. Lanthanide metal.
+Highly magnetic and neutron-absorbing. Added to magnets to keep them strong when hot; used in EV motors.
+
+
+LEVEL (67) Ho Holmium
+Silvery-white. Solid. Lanthanide metal.
+Has the highest magnetic strength of any element. Used in powerful magnets and surgical lasers.
+
+
+LEVEL (68) Er Erbium
+Silvery-white. Solid. Lanthanide metal.
+Forms pink salts. Used to amplify signals in fiber-optic cables and to tint glass and lasers pink.
+
+
+LEVEL (69) Tm Thulium
+Silvery-grey. Solid. Lanthanide metal.
+Rarest of the stable rare-earths. Used in portable X-ray sources and in surgical lasers.
+
+
+LEVEL (70) Yb Ytterbium
+Silvery. Solid. Lanthanide metal.
+Soft, electrical resistance rises under stress. Used in the most accurate atomic clocks and as a stress gauge.
+
+
+LEVEL (71) Lu Lutetium
+Silvery-white. Solid. Lanthanide metal.
+Hardest and densest lanthanide; very costly. Used in PET-scan detectors and as a refining catalyst.
+
+
+LEVEL (72) Hf Hafnium
+Steel-grey. Solid. Transition metal.
+Absorbs neutrons well, very high melting point. Used in nuclear reactor control rods and microchip insulators.
+
+
+LEVEL (73) Ta Tantalum
+Greyish-blue. Solid. Transition metal.
+Extremely corrosion-resistant and biocompatible. Used in tiny capacitors in phones and in surgical implants.
+
+
+LEVEL (74) W Tungsten
+Greyish-white. Solid. Transition metal.
+Highest melting point of all metals (3422 °C); very dense. Used in light-bulb filaments, drill bits, and armor.
+
+
+LEVEL (75) Re Rhenium
+Silvery-white. Solid. Transition metal.
+One of the densest, highest-melting and rarest metals. Used in jet-engine turbine blades and high-octane catalysts.
+
+
+LEVEL (76) Os Osmium
+Bluish-silver. Solid. Transition metal.
+Densest naturally occurring element; toxic oxide. Used in hard-wearing tips for pens and electrical contacts.
+
+
+LEVEL (77) Ir Iridium
+Silvery-white. Solid. Transition metal.
+Most corrosion-resistant metal; enriched in the asteroid that killed the dinosaurs. Used in spark plugs and crucibles.
+
+
+LEVEL (78) Pt Platinum
+Silvery-white. Solid. Transition metal.
+Dense, unreactive, excellent catalyst. Used in catalytic converters, jewelry, and lab equipment.
+
+
+LEVEL (79) Au Gold
+Yellow. Solid. Transition metal.
+Unreactive, extremely malleable, best at reflecting infrared. Used in jewelry, electronics, and as money.
+
+
+LEVEL (80) Hg Mercury
+Silvery. Liquid. Metal.
+Only metal liquid at room temperature; toxic vapor. Used in thermometers, switches, and fluorescent lamps.
+
+
+LEVEL (81) Tl Thallium
+Bluish-grey. Solid. Metal.
+Soft and very poisonous, odorless and tasteless. Once used in rat poison; now used in some electronics and detectors.
+
+
+LEVEL (82) Pb Lead
+Bluish-grey. Solid. Metal.
+Dense, soft, blocks radiation; toxic. Used in car batteries, radiation shielding, and historically in pipes and paint.
+
+
+LEVEL (83) Bi Bismuth
+Silvery-pink (iridescent oxide). Solid. Metal.
+Least toxic heavy metal; expands when it freezes; forms rainbow stair-step crystals. Used in stomach remedies (Pepto-Bismol) and low-melting alloys.
+
+
+LEVEL (84) Po Polonium
+Silvery-grey. Solid. Metalloid.
+Intensely radioactive; emits enough energy to glow and self-heat. Used in anti-static devices and as a notorious poison.
+
+
+LEVEL (85) At Astatine
+Presumed metallic/dark (never seen in bulk). Solid (estimated). Metalloid (halogen).
+Rarest naturally occurring element; intensely radioactive and so short-lived it has never been seen with the eye. Studied for targeted cancer radiotherapy.

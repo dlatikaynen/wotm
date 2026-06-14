@@ -3,7 +3,7 @@
 
 void loading_step(void *userData)
 {
-    // percentage ranging 0..1
+    // range 0..1
     static float progressPerc = 0.0f;
 
     SDL_SetRenderDrawColor(renderer, 10, 15, 20, 255);
