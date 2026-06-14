@@ -10,11 +10,13 @@
 
 #include "inc/render.h"
 #include "inc/const.h"
+#include "inc/gfxutil.h"
 
 // globals are defined here and declared extern in main.h
 SDL_Window *window;
 SDL_Renderer *renderer;
 SDL_Texture *texLogo = nullptr;
+SDL_Texture *texLogoGray = nullptr;
 TTF_Font *fredoka = nullptr;
 TTF_Font *yoster = nullptr;
 TTF_Font *poppins = nullptr;
@@ -83,6 +85,7 @@ int main()
         return 96;
     }
 
+    texLogoGray = make_grayscale_texture(renderer, imageSurface);
     std::cout << "Loaded logo (" << imageSurface->w << " x " << imageSurface->h << ")" << std::endl;
     SDL_DestroySurface(imageSurface);
 
@@ -304,7 +307,7 @@ int main()
     }
 
     SDL_SetRenderVSync(renderer, 1);
-    SDL_SetRenderLogicalPresentation(renderer, 512, 288, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+    SDL_SetRenderLogicalPresentation(renderer, WINDOW_LOGICAL_WIDTH, WINDOW_LOGICAL_HIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX);
     screen = WOTM_SCREEN_SPLASH;
 
 #ifdef __EMSCRIPTEN__
@@ -321,6 +324,11 @@ void cleanup()
     if (texLogo != nullptr)
     {
         SDL_DestroyTexture(texLogo);
+    }
+
+    if (texLogoGray != nullptr)
+    {
+        SDL_DestroyTexture(texLogoGray);
     }
 
     SDL_DestroyRenderer(renderer);

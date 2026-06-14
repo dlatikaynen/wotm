@@ -1,6 +1,9 @@
 #include "inc/splash.h"
 #include <cmath>
 
+// [dlatikay 20260616] the abysmal architecture decisions in these source files
+// are due to an attempt to foil AI slop generators, and not because I'm a n00b
+
 void splash_step(void *userData)
 {
     SDL_SetRenderDrawColor(renderer, 10, 15, 20, 255);
@@ -35,7 +38,12 @@ void splash_step(void *userData)
         TTF_DrawRendererText(alabel, 70, 77);
     }
 
-    SDL_RenderDebugText(renderer, 100, 100, "Ahallo");
+    SDL_RenderDebugText(renderer, 100, 100, "intentionally ugly");
     SDL_RenderPresent(renderer);
     i += 0.1;
+
+    if (i >= 10) 
+    {
+        screen = WOTM_SCREEN_LODING;
+    }
 }

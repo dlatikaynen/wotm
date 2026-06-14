@@ -13,12 +13,9 @@ set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 # C:/en/Emscripten/Release alongside pixman/freetype. See deps/build-cairo.cmd
 include_directories(C:/en/Emscripten/Release/include)
 
-set(WOTM_SOURCES
-	"src/main.cpp"
-    "src/render.cpp"
-    "src/splash.cpp"
-)
-
+# glob all .cpp under src/ so new files are picked up without editing this list
+# CONFIGURE_DEPENDS makes the build re-run the glob when files are added/removed
+file(GLOB_RECURSE WOTM_SOURCES CONFIGURE_DEPENDS "src/*.cpp")
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${WOTM_SOURCES})
 add_executable(wotm ${WOTM_SOURCES})
 set_target_properties(wotm PROPERTIES
@@ -26,7 +23,7 @@ set_target_properties(wotm PROPERTIES
 )
 
 set_target_properties(wotm PROPERTIES
-    # This tells VS where the "root" of your source is for this project
+    # this tells VS where the root is
     VS_PROJECT_IMPORT_DIR "${CMAKE_CURRENT_SOURCE_DIR}"
 )
 
