@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <SDL3/SDL.h>
 #include "const.h"
 
 typedef struct Gamestate {
@@ -13,6 +14,8 @@ typedef struct Gamestate {
 
     // when loading has finished, then this is reset to 0 and currentLevel assumes its value
     int enteringLevel;
+
+    SDL_Texture* texArena;
 
     // player1 state
     bool isPlayer1Local;

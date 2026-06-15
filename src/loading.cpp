@@ -1,5 +1,27 @@
 #include "inc/loading.h"
 #include <algorithm>
+#include <iostream>
+
+std::atomic<bool> loadingComplete{false};
+SDL_Surface* loadedSurface = nullptr;
+
+int load_in_background(void* ptr) 
+{
+    loadedSurface = SDL_LoadPNG("data/logo-ki-064.png");
+
+    if (loadedSurface == nullptr)
+    {
+        std::cout << "Failed to load level surface: " << SDL_GetError() << std::endl;
+    }
+    else
+    {
+        std::cout << "Level surface loaded" << std::endl;
+    }
+
+    loadingComplete = true;
+    
+    return 0;
+}
 
 void loading_step(void *userData)
 {
@@ -47,5 +69,22 @@ void loading_step(void *userData)
     }
 
     SDL_RenderPresent(renderer);
-    progressPerc += 0.005f;
+    
+    if (progressPerc == 0.0f)
+    {
+        load_in_background(nullptr);
+    }
+
+    if (loadingComplete && loadedSurface) 
+    {
+        state->texArena = SDL_CreateTextureFromSurface(renderer, loadedSurface);
+        SDL_DestroySurface(loadedSurface);
+        loadedSurface = nullptr;
+        progressPerc = 1.0f;        
+    }    
+
+    if (progressPerc < 1.0f)
+    {
+        progressPerc += 0.005f;
+    }
 }

@@ -7,4 +7,10 @@ void reset_gamestate()
     gamestate.screen = WOTM_SCREEN_SPLASH;
     gamestate.dialog = 0;
     gamestate.i = 0;
+    if (gamestate.texArena != nullptr) 
+    {
+        SDL_DestroyTexture(gamestate.texArena);
+    }
+    
+    gamestate.texArena = nullptr;
 }
