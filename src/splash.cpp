@@ -59,7 +59,7 @@ namespace
         double bg,
         double bb
     ) {
-        const double cyc  = i * 0.06 + phase;
+        const double cyc  = gamestate.i * 0.06 + phase;
         const double f = cyc - floor(cyc);
         const double ease = f * f * (3.0 - 2.0 * f);
         const double maxLen = GORE_DRIP_H * (0.45 + 0.55 * phase);
@@ -202,7 +202,7 @@ namespace
 
         cairo_matrix_t cm;
 
-        cairo_matrix_init_translate(&cm, -i * (cycleW / 80.0), 0.0);
+        cairo_matrix_init_translate(&cm, -gamestate.i * (cycleW / 80.0), 0.0);
         cairo_pattern_set_matrix(grad, &cm);
         cairo_set_source(cr, grad);
         cairo_fill(cr);
@@ -376,6 +376,9 @@ namespace
 
 void splash_step(void *userData)
 {
+    const auto& state = static_cast<Gamestate*>(userData);
+    const auto& i = state->i;
+
     SDL_SetRenderDrawColor(renderer, 10, 15, 20, 255);
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 200, 100, 200, 255);
@@ -429,10 +432,42 @@ void splash_step(void *userData)
 
     SDL_RenderDebugText(renderer, 100, 100, "intentionally ugly");
     SDL_RenderPresent(renderer);
-    i += 0.1;
+    state->i += 0.1;
 
-    if (i >= 10) 
+    SDL_Event event{};
+    while (SDL_PollEvent(&event))
     {
-        //screen = WOTM_SCREEN_LODING;
+        switch (event.type)
+        {
+            case SDL_EVENT_QUIT:
+            {
+                break;
+            }
+            case SDL_EVENT_WINDOW_RESIZED:
+            {
+                //state.width = event.window.data1;
+                //state.height = event.window.data2;
+                break;
+            }
+            case SDL_EVENT_KEY_DOWN:
+            {
+                if (!event.key.repeat)
+                {
+                    switch(event.key.scancode)
+                    {
+                        case SDL_SCANCODE_SPACE:
+                        {
+                            state->screen = WOTM_SCREEN_LODING;
+                            state->enteringLevel = 1;
+                            
+                            break;
+                        }
+                    }
+                    
+                }
+
+                break;
+            }
+        }
     }
 }

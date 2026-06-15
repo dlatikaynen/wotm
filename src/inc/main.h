@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL3_ttf/SDL_ttf.h>
+#include "gamestate.h"
 
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
@@ -11,9 +12,7 @@ extern TTF_TextEngine *textEngine;
 extern TTF_Text *slogan;
 extern TTF_Text *alabel;
 extern TTF_Text *wratho;
-extern float i;
-extern int screen;
-extern int dialog;
+extern Gamestate gamestate;
 
 // fwd decl for main.c
 void cleanup();

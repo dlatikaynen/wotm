@@ -11,6 +11,7 @@
 #include "inc/render.h"
 #include "inc/const.h"
 #include "inc/gfxutil.h"
+#include "inc/gamestate.h"
 
 // globals are defined here and declared extern in main.h
 SDL_Window *window;
@@ -25,9 +26,7 @@ TTF_TextEngine *textEngine = nullptr;
 TTF_Text *slogan = nullptr;
 TTF_Text *alabel = nullptr;
 TTF_Text *wratho = nullptr;
-float i = 0;
-int screen = 0;
-int dialog = 0;
+Gamestate gamestate = {};
 
 // audio
 bool isAudioAvailable = false;
@@ -37,8 +36,8 @@ static MIX_Track* track1 = nullptr;
 
 int main()
 {
-    const char *state = "The Scorch Gore Game\n\"Wrath of the Mild\"\nVersion 1.1.0\nCopyright (c)2025-2026 dlatikay, en-software\n";
-    std::cout << state << std::endl;
+    const char *ahallo = "The Scorch Gore Game\n\"Wrath of the Mild\"\nVersion 1.1.0\nCopyright (c)2025-2026 dlatikay, en-software\n";
+    std::cout << ahallo << std::endl;
 
     SDL_SetHint(SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT, "#canvas");
     if (!SDL_Init(SDL_INIT_VIDEO))
@@ -329,10 +328,10 @@ int main()
 
     SDL_SetRenderVSync(renderer, 1);
     SDL_SetRenderLogicalPresentation(renderer, WINDOW_LOGICAL_WIDTH, WINDOW_LOGICAL_HIGHT, SDL_LOGICAL_PRESENTATION_LETTERBOX);
-    screen = WOTM_SCREEN_SPLASH;
+    reset_gamestate();    
 
 #ifdef __EMSCRIPTEN__
-    emscripten_set_main_loop_arg(step, &state, 0, true);
+    emscripten_set_main_loop_arg(step, &gamestate, 0, true);
 #endif
 
     cleanup();

@@ -4,7 +4,9 @@
 
 void step(void *userData)
 {
-    switch(screen)
+    const auto& state = static_cast<Gamestate*>(userData);
+
+    switch(state->screen)
     {
         case WOTM_SCREEN_SPLASH:
             splash_step(userData);

@@ -3,6 +3,8 @@
 
 void loading_step(void *userData)
 {
+    const auto& state = static_cast<Gamestate*>(userData);
+
     // range 0..1
     static float progressPerc = 0.0f;
 
