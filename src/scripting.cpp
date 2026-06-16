@@ -3,12 +3,10 @@
 #include <sol/sol.hpp>
 #include <iostream>
 
-int scripting_smoke_test()
+int LUA_Init()
 {
     sol::state lua;
     lua.open_libraries(sol::lib::base, sol::lib::math);
-
-    // a host function exposed to Lua, to exercise the C++ <-> Lua boundary
     lua.set_function("answer", [](int a, int b) { return a * b; });
 
     auto result = lua.safe_script("return answer(6, 7)", sol::script_pass_on_error);
@@ -16,11 +14,14 @@ int scripting_smoke_test()
     if (!result.valid())
     {
         sol::error err = result;
-        std::cout << "[lua] smoke test FAILED: " << err.what() << std::endl;
+        std::cerr << "Lua binding failed: " << err.what() << "\n";
+
         return -1;
     }
 
     const int value = result;
-    std::cout << "[lua] " << LUA_VERSION << " + sol2 ok, script returned " << value << std::endl;
+
+    std::cout << "Lua script host version " << LUA_VERSION << std::endl;
+
     return value;
 }

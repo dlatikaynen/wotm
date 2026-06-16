@@ -40,8 +40,6 @@ int main()
     const char *ahallo = "The Scorch Gore Game\n\"Wrath of the Mild\"\nVersion 1.1.0\nCopyright (c)2025-2026 dlatikay, en-software\n";
     std::cout << ahallo << std::endl;
 
-    scripting_smoke_test();
-
     SDL_SetHint(SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT, "#canvas");
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
@@ -50,6 +48,27 @@ int main()
         return 99;
     }
 
+    const auto& sdlVersion = SDL_VERSION;
+    std::cout 
+        << "Engine version SDL " 
+        << SDL_VERSIONNUM_MAJOR(sdlVersion) 
+        << "."
+        << SDL_VERSIONNUM_MINOR(sdlVersion) 
+        << "."
+        << SDL_VERSIONNUM_MICRO(sdlVersion) 
+        << std::endl;
+
+    const auto& imgVersion = IMG_Version();
+    std::cout 
+        << "Image library version SDL " 
+        << SDL_VERSIONNUM_MAJOR(imgVersion) 
+        << "."
+        << SDL_VERSIONNUM_MINOR(imgVersion) 
+        << "."
+        << SDL_VERSIONNUM_MICRO(imgVersion) 
+        << std::endl;
+
+    LUA_Init();
     window = SDL_CreateWindow("Scorch Gore: Wrath of the Mild", 1024, 288 * 2, SDL_WINDOW_RESIZABLE);
     if (!window)
     {
@@ -126,26 +145,6 @@ int main()
 
         return 92;
     }
-
-    const auto& sdlVersion = SDL_VERSION;
-    std::cout 
-        << "Engine version SDL " 
-        << SDL_VERSIONNUM_MAJOR(sdlVersion) 
-        << "."
-        << SDL_VERSIONNUM_MINOR(sdlVersion) 
-        << "."
-        << SDL_VERSIONNUM_MICRO(sdlVersion) 
-        << std::endl;
-
-    const auto& imgVersion = IMG_Version();
-    std::cout 
-        << "Image library version SDL " 
-        << SDL_VERSIONNUM_MAJOR(imgVersion) 
-        << "."
-        << SDL_VERSIONNUM_MINOR(imgVersion) 
-        << "."
-        << SDL_VERSIONNUM_MICRO(imgVersion) 
-        << std::endl;
 
     if (MIX_Init())
     {
