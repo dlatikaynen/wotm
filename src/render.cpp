@@ -1,6 +1,7 @@
 #include "inc/render.h"
 #include "inc/splash.h"
 #include "inc/loading.h"
+#include "inc/level.h"
 
 void step(void *userData)
 {
@@ -14,6 +15,10 @@ void step(void *userData)
 
         case WOTM_SCREEN_LODING:
             loading_step(userData);
+            break;
+
+        case WOTM_SCREEN_LEVEL:
+            level_step(userData);
             break;
     }
 }
