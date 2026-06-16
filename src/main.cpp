@@ -12,6 +12,7 @@
 #include "inc/const.h"
 #include "inc/gfxutil.h"
 #include "inc/gamestate.h"
+#include "inc/scripting.h"
 
 // globals are defined here and declared extern in main.h
 SDL_Window *window;
@@ -38,6 +39,8 @@ int main()
 {
     const char *ahallo = "The Scorch Gore Game\n\"Wrath of the Mild\"\nVersion 1.1.0\nCopyright (c)2025-2026 dlatikay, en-software\n";
     std::cout << ahallo << std::endl;
+
+    scripting_smoke_test();
 
     SDL_SetHint(SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT, "#canvas");
     if (!SDL_Init(SDL_INIT_VIDEO))

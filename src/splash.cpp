@@ -462,6 +462,9 @@ void splash_step(void *userData)
                             
                             break;
                         }
+
+                        default:
+                            break;
                     }
                     
                 }
