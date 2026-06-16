@@ -93,7 +93,6 @@ void level_begin(SDL_Renderer* r, Gamestate* state, int w, int h)
 
     g_w = w;
     g_h = h;
-
     g_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, w, h);
     g_cr = cairo_create(g_surface);
 
