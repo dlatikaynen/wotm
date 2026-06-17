@@ -13,6 +13,7 @@
 #include <iostream>
 #include <map>
 #include <memory>
+#include <stdexcept>
 #include <tuple>
 
 namespace
@@ -28,20 +29,41 @@ namespace
 
     struct Recorder
     {
-        std::vector<DrawCmd>& cmds;
-        LevelLighting& light;
-        FontFace* font = nullptr;
-        
-        // default upper-left
-        double sunRad = 135.0 * M_PI / 180.0;
+        LevelLayer& background;
+        LevelLayer& arena;
+        LevelLayer& foreground;
 
+        int current = 0;
+        FontFace* font = nullptr;
+        double sunRad = 135.0 * M_PI / 180.0;
         int commandsPerFrame = 1;
         int viewportW = 0;
         int viewportH = 0;
-        int arenaW = 0;
-        int arenaH = 0;
-        int scrollX = 0;
-        int scrollY = 0;
+
+        LevelLayer& cur()
+        {
+            if (current <= 0)
+            {
+                return background;
+            }
+
+            if (current == 1)
+            {
+                return arena;
+            }
+
+            return foreground;
+        }
+
+        std::vector<DrawCmd>& cmds() 
+        {
+             return cur().cmds;
+        }
+
+        LevelLighting& light()
+        {
+            return cur().light;
+        }
     };
 
     SurfacePtr load_png_surface(const std::string& path)
@@ -204,72 +226,72 @@ namespace
 
         // sources, states
         g.set_function("rgb", [&rec](double r, double gg, double b) {
-            rec.cmds.push_back([r, gg, b](cairo_t* cr) { cairo_set_source_rgb(cr, r, gg, b); });
+            rec.cmds().push_back([r, gg, b](cairo_t* cr) { cairo_set_source_rgb(cr, r, gg, b); });
         });
 
         g.set_function("rgba", [&rec](double r, double gg, double b, double a) {
-            rec.cmds.push_back([r, gg, b, a](cairo_t* cr) { cairo_set_source_rgba(cr, r, gg, b, a); });
+            rec.cmds().push_back([r, gg, b, a](cairo_t* cr) { cairo_set_source_rgba(cr, r, gg, b, a); });
         });
 
         g.set_function("line_width", [&rec](double w) {
-            rec.cmds.push_back([w](cairo_t* cr) { cairo_set_line_width(cr, w); });
+            rec.cmds().push_back([w](cairo_t* cr) { cairo_set_line_width(cr, w); });
         });
 
         g.set_function("line_cap", [&rec](std::string s) {
             const auto c = cap_from(s);
-            rec.cmds.push_back([c](cairo_t* cr) { cairo_set_line_cap(cr, c); });
+            rec.cmds().push_back([c](cairo_t* cr) { cairo_set_line_cap(cr, c); });
         });
 
         g.set_function("line_join", [&rec](std::string s) {
             const auto j = join_from(s);
-            rec.cmds.push_back([j](cairo_t* cr) { cairo_set_line_join(cr, j); });
+            rec.cmds().push_back([j](cairo_t* cr) { cairo_set_line_join(cr, j); });
         });
 
         g.set_function("operator", [&rec](std::string s) {
             const auto o = op_from(s);
-            rec.cmds.push_back([o](cairo_t* cr) { cairo_set_operator(cr, o); });
+            rec.cmds().push_back([o](cairo_t* cr) { cairo_set_operator(cr, o); });
         });
 
         // transforms
-        g.set_function("save",      [&rec]() { rec.cmds.push_back([](cairo_t* cr) { cairo_save(cr); }); });
-        g.set_function("restore",   [&rec]() { rec.cmds.push_back([](cairo_t* cr) { cairo_restore(cr); }); });
-        g.set_function("translate", [&rec](double x, double y) { rec.cmds.push_back([x, y](cairo_t* cr) { cairo_translate(cr, x, y); }); });
-        g.set_function("scale",     [&rec](double x, double y) { rec.cmds.push_back([x, y](cairo_t* cr) { cairo_scale(cr, x, y); }); });
-        g.set_function("rotate",    [&rec](double a) { rec.cmds.push_back([a](cairo_t* cr) { cairo_rotate(cr, a); }); });
-        g.set_function("identity",  [&rec]() { rec.cmds.push_back([](cairo_t* cr) { cairo_identity_matrix(cr); }); });
+        g.set_function("save",      [&rec]() { rec.cmds().push_back([](cairo_t* cr) { cairo_save(cr); }); });
+        g.set_function("restore",   [&rec]() { rec.cmds().push_back([](cairo_t* cr) { cairo_restore(cr); }); });
+        g.set_function("translate", [&rec](double x, double y) { rec.cmds().push_back([x, y](cairo_t* cr) { cairo_translate(cr, x, y); }); });
+        g.set_function("scale",     [&rec](double x, double y) { rec.cmds().push_back([x, y](cairo_t* cr) { cairo_scale(cr, x, y); }); });
+        g.set_function("rotate",    [&rec](double a) { rec.cmds().push_back([a](cairo_t* cr) { cairo_rotate(cr, a); }); });
+        g.set_function("identity",  [&rec]() { rec.cmds().push_back([](cairo_t* cr) { cairo_identity_matrix(cr); }); });
 
         // paths
-        g.set_function("move_to",     [&rec](double x, double y) { rec.cmds.push_back([x, y](cairo_t* cr) { cairo_move_to(cr, x, y); }); });
-        g.set_function("line_to",     [&rec](double x, double y) { rec.cmds.push_back([x, y](cairo_t* cr) { cairo_line_to(cr, x, y); }); });
-        g.set_function("rel_line_to", [&rec](double x, double y) { rec.cmds.push_back([x, y](cairo_t* cr) { cairo_rel_line_to(cr, x, y); }); });
+        g.set_function("move_to",     [&rec](double x, double y) { rec.cmds().push_back([x, y](cairo_t* cr) { cairo_move_to(cr, x, y); }); });
+        g.set_function("line_to",     [&rec](double x, double y) { rec.cmds().push_back([x, y](cairo_t* cr) { cairo_line_to(cr, x, y); }); });
+        g.set_function("rel_line_to", [&rec](double x, double y) { rec.cmds().push_back([x, y](cairo_t* cr) { cairo_rel_line_to(cr, x, y); }); });
         g.set_function("curve_to",    [&rec](double x1, double y1, double x2, double y2, double x3, double y3) {
-            rec.cmds.push_back([x1, y1, x2, y2, x3, y3](cairo_t* cr) 
+            rec.cmds().push_back([x1, y1, x2, y2, x3, y3](cairo_t* cr) 
             {
                  cairo_curve_to(cr, x1, y1, x2, y2, x3, y3); 
             });
         });
 
         g.set_function("arc", [&rec](double xc, double yc, double r, double a1, double a2) {
-            rec.cmds.push_back([xc, yc, r, a1, a2](cairo_t* cr) { cairo_arc(cr, xc, yc, r, a1, a2); });
+            rec.cmds().push_back([xc, yc, r, a1, a2](cairo_t* cr) { cairo_arc(cr, xc, yc, r, a1, a2); });
         });
 
         g.set_function("arc_neg", [&rec](double xc, double yc, double r, double a1, double a2) {
-            rec.cmds.push_back([xc, yc, r, a1, a2](cairo_t* cr) { cairo_arc_negative(cr, xc, yc, r, a1, a2); });
+            rec.cmds().push_back([xc, yc, r, a1, a2](cairo_t* cr) { cairo_arc_negative(cr, xc, yc, r, a1, a2); });
         });
 
         g.set_function("rectangle", [&rec](double x, double y, double w, double h) {
-            rec.cmds.push_back([x, y, w, h](cairo_t* cr) { cairo_rectangle(cr, x, y, w, h); });
+            rec.cmds().push_back([x, y, w, h](cairo_t* cr) { cairo_rectangle(cr, x, y, w, h); });
         });
 
         g.set_function("circle", [&rec](double xc, double yc, double r) {
-            rec.cmds.push_back([xc, yc, r](cairo_t* cr) {
+            rec.cmds().push_back([xc, yc, r](cairo_t* cr) {
                 cairo_new_sub_path(cr);
                 cairo_arc(cr, xc, yc, r, 0.0, 2.0 * M_PI);
             });
         });
 
         g.set_function("rounded_rect", [&rec](double x, double y, double w, double h, double r) {
-            rec.cmds.push_back([x, y, w, h, r](cairo_t* cr) {
+            rec.cmds().push_back([x, y, w, h, r](cairo_t* cr) {
                 const double d = M_PI / 180.0;
                 cairo_new_sub_path(cr);
                 cairo_arc(cr, x + w - r, y + r,     r, -90 * d,   0 * d);
@@ -280,20 +302,20 @@ namespace
             });
         });
 
-        g.set_function("close",        [&rec]() { rec.cmds.push_back([](cairo_t* cr) { cairo_close_path(cr); }); });
-        g.set_function("new_path",     [&rec]() { rec.cmds.push_back([](cairo_t* cr) { cairo_new_path(cr); }); });
-        g.set_function("new_sub_path", [&rec]() { rec.cmds.push_back([](cairo_t* cr) { cairo_new_sub_path(cr); }); });
+        g.set_function("close",        [&rec]() { rec.cmds().push_back([](cairo_t* cr) { cairo_close_path(cr); }); });
+        g.set_function("new_path",     [&rec]() { rec.cmds().push_back([](cairo_t* cr) { cairo_new_path(cr); }); });
+        g.set_function("new_sub_path", [&rec]() { rec.cmds().push_back([](cairo_t* cr) { cairo_new_sub_path(cr); }); });
 
         // painting
-        g.set_function("fill",            [&rec]() { rec.cmds.push_back([](cairo_t* cr) { cairo_fill(cr); }); });
-        g.set_function("fill_preserve",   [&rec]() { rec.cmds.push_back([](cairo_t* cr) { cairo_fill_preserve(cr); }); });
-        g.set_function("stroke",          [&rec]() { rec.cmds.push_back([](cairo_t* cr) { cairo_stroke(cr); }); });
-        g.set_function("stroke_preserve", [&rec]() { rec.cmds.push_back([](cairo_t* cr) { cairo_stroke_preserve(cr); }); });
-        g.set_function("paint",           [&rec]() { rec.cmds.push_back([](cairo_t* cr) { cairo_paint(cr); }); });
-        g.set_function("paint_alpha",     [&rec](double a) { rec.cmds.push_back([a](cairo_t* cr) { cairo_paint_with_alpha(cr, a); }); });
-        g.set_function("clip",            [&rec]() { rec.cmds.push_back([](cairo_t* cr) { cairo_clip(cr); }); });
-        g.set_function("clip_preserve",   [&rec]() { rec.cmds.push_back([](cairo_t* cr) { cairo_clip_preserve(cr); }); });
-        g.set_function("reset_clip",      [&rec]() { rec.cmds.push_back([](cairo_t* cr) { cairo_reset_clip(cr); }); });
+        g.set_function("fill",            [&rec]() { rec.cmds().push_back([](cairo_t* cr) { cairo_fill(cr); }); });
+        g.set_function("fill_preserve",   [&rec]() { rec.cmds().push_back([](cairo_t* cr) { cairo_fill_preserve(cr); }); });
+        g.set_function("stroke",          [&rec]() { rec.cmds().push_back([](cairo_t* cr) { cairo_stroke(cr); }); });
+        g.set_function("stroke_preserve", [&rec]() { rec.cmds().push_back([](cairo_t* cr) { cairo_stroke_preserve(cr); }); });
+        g.set_function("paint",           [&rec]() { rec.cmds().push_back([](cairo_t* cr) { cairo_paint(cr); }); });
+        g.set_function("paint_alpha",     [&rec](double a) { rec.cmds().push_back([a](cairo_t* cr) { cairo_paint_with_alpha(cr, a); }); });
+        g.set_function("clip",            [&rec]() { rec.cmds().push_back([](cairo_t* cr) { cairo_clip(cr); }); });
+        g.set_function("clip_preserve",   [&rec]() { rec.cmds().push_back([](cairo_t* cr) { cairo_clip_preserve(cr); }); });
+        g.set_function("reset_clip",      [&rec]() { rec.cmds().push_back([](cairo_t* cr) { cairo_reset_clip(cr); }); });
 
         // gradients
         auto read_stops = [](sol::table stops) {
@@ -319,7 +341,7 @@ namespace
 
         g.set_function("linear", [&rec, read_stops](double x0, double y0, double x1, double y1, sol::table stops) {
             auto v = read_stops(stops);
-            rec.cmds.push_back([=](cairo_t* cr) {
+            rec.cmds().push_back([=](cairo_t* cr) {
                 cairo_pattern_t* p = cairo_pattern_create_linear(x0, y0, x1, y1);
 
                 for (const auto& s : v)
@@ -334,7 +356,7 @@ namespace
 
         g.set_function("radial", [&rec, read_stops](double cx0, double cy0, double r0, double cx1, double cy1, double r1, sol::table stops) {
             auto v = read_stops(stops);
-            rec.cmds.push_back([=](cairo_t* cr) {
+            rec.cmds().push_back([=](cairo_t* cr) {
                 cairo_pattern_t* p = cairo_pattern_create_radial(cx0, cy0, r0, cx1, cy1, r1);
                 
                 for (const auto& s : v) 
@@ -365,7 +387,7 @@ namespace
                 scale = opts->get_or("scale", 1.0);
             }
 
-            rec.cmds.push_back([surf, x, y, alpha, scale](cairo_t* cr) {
+            rec.cmds().push_back([surf, x, y, alpha, scale](cairo_t* cr) {
                 cairo_save(cr);
                 cairo_translate(cr, x, y);
                 if (scale != 1.0) 
@@ -399,7 +421,7 @@ namespace
 
             const bool rep = repeat.value_or(false);
 
-            rec.cmds.push_back([surf, rep](cairo_t* cr) {
+            rec.cmds().push_back([surf, rep](cairo_t* cr) {
                 cairo_pattern_t* p = cairo_pattern_create_for_surface(surf.get());
 
                 cairo_pattern_set_extend(p, rep ? CAIRO_EXTEND_REPEAT : CAIRO_EXTEND_PAD);
@@ -422,7 +444,8 @@ namespace
 
         auto emit_text = [&rec](const std::string& str, double x, double y, double size, bool fill) {
             FontFace* f = rec.font;
-            rec.cmds.push_back([f, str, x, y, size, fill](cairo_t* cr) {
+
+            rec.cmds().push_back([f, str, x, y, size, fill](cairo_t* cr) {
                 if (f != nullptr)
                 {
                      cairo_set_font_face(cr, f->cf);
@@ -448,7 +471,8 @@ namespace
 
         g.set_function("glyph", [&rec](unsigned int codepoint, double x, double y, double size) {
             FontFace* f = rec.font;
-            rec.cmds.push_back([f, codepoint, x, y, size](cairo_t* cr) {
+
+            rec.cmds().push_back([f, codepoint, x, y, size](cairo_t* cr) {
                 if (f == nullptr)
                 {
                     return;
@@ -474,16 +498,23 @@ namespace
         // viewport in px: local W, H = gfx.viewport()
         g.set_function("viewport", [&rec]() { return std::make_tuple(rec.viewportW, rec.viewportH); });
 
-        // arena in px
         g.set_function("arena", [&rec](int w, int h) {
-            rec.arenaW = w > rec.viewportW ? w : rec.viewportW;
-            rec.arenaH = h > rec.viewportH ? h : rec.viewportH;
+            rec.cur().arenaW = w > rec.viewportW ? w : rec.viewportW;
+            rec.cur().arenaH = h > rec.viewportH ? h : rec.viewportH;
         });
 
-        // initial scroll offset
         g.set_function("scroll", [&rec](int x, int y) {
-            rec.scrollX = x;
-            rec.scrollY = y;
+            rec.cur().scrollX = x;
+            rec.cur().scrollY = y;
+        });
+
+        g.set_function("nextlayer", [&rec]() {
+            if (rec.current >= 2)
+            {
+                throw std::runtime_error("gfx.nextlayer: already on the last layer");
+            }
+
+            ++rec.current;
         });
 
         // fill the current path with base color (r,g,b) and bevel its edges with
@@ -492,7 +523,7 @@ namespace
         g.set_function("lit_fill", [&rec](double r, double gg, double b, double depth, double intensity) {
             const double sun = rec.sunRad;
 
-            rec.cmds.push_back([r, gg, b, depth, intensity, sun](cairo_t* cr) {
+            rec.cmds().push_back([r, gg, b, depth, intensity, sun](cairo_t* cr) {
                 cairo_path_t* path = cairo_copy_path(cr);
                 
                 // fill
@@ -551,12 +582,12 @@ namespace
 
         // scene lighting
         g.set_function("ambient", [&rec](double r, double gg, double b) {
-            rec.light.hasAmbient = true;
-            rec.light.ar = r; rec.light.ag = gg; rec.light.ab = b;
+            rec.light().hasAmbient = true;
+            rec.light().ar = r; rec.light().ag = gg; rec.light().ab = b;
         });
 
         g.set_function("light", [&rec](double x, double y, double radius, double r, double gg, double b, double intensity) {
-            rec.light.lights.push_back({x, y, radius, r, gg, b, intensity});
+            rec.light().lights.push_back({x, y, radius, r, gg, b, intensity});
         });
     }
 }
@@ -565,17 +596,26 @@ bool run_level_script(
     const std::string& path,
     int viewportW,
     int viewportH,
-    std::vector<DrawCmd>& out,
-    LevelLighting& light,
+    LevelLayer& background,
+    LevelLayer& arena,
+    LevelLayer& foreground,
     int& commandsPerFrame,
-    int& arenaW,
-    int& arenaH,
-    int& scrollX,
-    int& scrollY,
     std::string& err
 ) {
-    out.clear();
-    light = LevelLighting{};
+    auto reset_layer = [&](LevelLayer& l) {
+        l = LevelLayer{};
+        l.arenaW = viewportW;
+        l.arenaH = viewportH;
+    };
+
+    auto clamp_scroll = [&](LevelLayer& l) {
+        l.scrollX = std::clamp(l.scrollX, 0, std::max(0, l.arenaW - viewportW));
+        l.scrollY = std::clamp(l.scrollY, 0, std::max(0, l.arenaH - viewportH));
+    };
+
+    reset_layer(background);
+    reset_layer(arena);
+    reset_layer(foreground);
 
     try
     {
@@ -583,11 +623,9 @@ bool run_level_script(
 
         lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::string);
 
-        Recorder rec{out, light};
+        Recorder rec{background, arena, foreground};
         rec.viewportW = viewportW;
         rec.viewportH = viewportH;
-        rec.arenaW = viewportW;
-        rec.arenaH = viewportH;
 
         register_gfx(lua, rec);
 
@@ -598,23 +636,24 @@ bool run_level_script(
             sol::error e = result;
 
             err = e.what();
-            out.clear();
-            light = LevelLighting{};
+            reset_layer(background);
+            reset_layer(arena);
+            reset_layer(foreground);
 
             return false;
         }
 
         commandsPerFrame = rec.commandsPerFrame;
-        arenaW = rec.arenaW;
-        arenaH = rec.arenaH;
-        scrollX = std::clamp(rec.scrollX, 0, std::max(0, arenaW - viewportW));
-        scrollY = std::clamp(rec.scrollY, 0, std::max(0, arenaH - viewportH));
+        clamp_scroll(background);
+        clamp_scroll(arena);
+        clamp_scroll(foreground);
     }
     catch (const std::exception& e)
     {
         err = e.what();
-        out.clear();
-        light = LevelLighting{};
+        reset_layer(background);
+        reset_layer(arena);
+        reset_layer(foreground);
 
         return false;
     }

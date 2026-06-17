@@ -19,20 +19,42 @@ void loading_step(void *userData)
     SDL_SetRenderDrawColor(renderer, 10, 15, 20, 255);
     SDL_RenderClear(renderer);
 
+    const float levelAlpha = 0.1f;
+    const Uint8 a = static_cast<Uint8>(levelAlpha * 255.0f);
+    const float vw = static_cast<float>(WINDOW_LOGICAL_WIDTH);
+    const float vh = static_cast<float>(WINDOW_LOGICAL_HIGHT);
+
+    if (state->texBackground != nullptr)
+    {
+        const SDL_FRect src = {state->bgScrollX, state->bgScrollY, vw, vh};
+
+        SDL_SetTextureColorMod(state->texBackground, a, a, a);
+        SDL_SetTextureAlphaMod(state->texBackground, a);
+        SDL_RenderTexture(renderer, state->texBackground, &src, nullptr);
+        SDL_SetTextureColorMod(state->texBackground, 255, 255, 255);
+        SDL_SetTextureAlphaMod(state->texBackground, 255);
+    }
+
     if (state->texArena != nullptr)
     {
-        const float levelAlpha = 0.1f;
-        const SDL_FRect src = {
-            state->scrollX,
-            state->scrollY,
-            static_cast<float>(WINDOW_LOGICAL_WIDTH),
-            static_cast<float>(WINDOW_LOGICAL_HIGHT)
-        };
+        const SDL_FRect src = {state->scrollX, state->scrollY, vw, vh};
 
-        SDL_SetTextureBlendMode(state->texArena, SDL_BLENDMODE_BLEND);
-        SDL_SetTextureAlphaMod(state->texArena, static_cast<Uint8>(levelAlpha * 255.0f));
+        SDL_SetTextureColorMod(state->texArena, a, a, a);
+        SDL_SetTextureAlphaMod(state->texArena, a);
         SDL_RenderTexture(renderer, state->texArena, &src, nullptr);
-        SDL_SetTextureAlphaMod(state->texArena, 255); // restore
+        SDL_SetTextureColorMod(state->texArena, 255, 255, 255);
+        SDL_SetTextureAlphaMod(state->texArena, 255);
+    }
+
+    if (state->texForeground != nullptr)
+    {
+        const SDL_FRect src = {state->fgScrollX, state->fgScrollY, vw, vh};
+
+        SDL_SetTextureColorMod(state->texForeground, a, a, a);
+        SDL_SetTextureAlphaMod(state->texForeground, a);
+        SDL_RenderTexture(renderer, state->texForeground, &src, nullptr);
+        SDL_SetTextureColorMod(state->texForeground, 255, 255, 255);
+        SDL_SetTextureAlphaMod(state->texForeground, 255);
     }
 
     if (texLogo != nullptr && texLogoGray != nullptr)

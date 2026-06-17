@@ -23,16 +23,23 @@ struct LevelLighting
     std::vector<Light> lights;
 };
 
+struct LevelLayer
+{
+    std::vector<DrawCmd> cmds;
+    LevelLighting light;
+    int arenaW = 0;
+    int arenaH = 0;
+    int scrollX = 0;
+    int scrollY = 0;
+};
+
 bool run_level_script(
     const std::string& path,
     int viewportW,
     int viewportH,
-    std::vector<DrawCmd>& out,
-    LevelLighting& light,
+    LevelLayer& background,
+    LevelLayer& arena,
+    LevelLayer& foreground,
     int& commandsPerFrame,
-    int& arenaW,
-    int& arenaH,
-    int& scrollX,
-    int& scrollY,
     std::string& err
 );

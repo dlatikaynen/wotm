@@ -15,9 +15,17 @@ typedef struct Gamestate {
     // when loading has finished, then this is reset to 0 and currentLevel assumes its value
     int enteringLevel;
 
+    SDL_Texture* texBackground;
+    float bgScrollX;
+    float bgScrollY;
+
     SDL_Texture* texArena;
     float scrollX;
     float scrollY;
+
+    SDL_Texture* texForeground;
+    float fgScrollX;
+    float fgScrollY;
 
     // player1 state
     bool isPlayer1Local;
