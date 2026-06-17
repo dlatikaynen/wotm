@@ -1,3 +1,4 @@
+-- TODO: the lua script should be able to get those from the host application
 local W, H = 512, 288
 
 -- replay 2 draw commands per frame while loading

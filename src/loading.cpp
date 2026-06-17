@@ -5,7 +5,6 @@
 void loading_step(void *userData)
 {
     const auto& state = static_cast<Gamestate*>(userData);
-
     static bool started = false;
 
     if (!started)
