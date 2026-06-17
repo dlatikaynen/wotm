@@ -25,8 +25,14 @@ struct LevelLighting
 
 bool run_level_script(
     const std::string& path,
+    int viewportW,
+    int viewportH,
     std::vector<DrawCmd>& out,
     LevelLighting& light,
     int& commandsPerFrame,
+    int& arenaW,
+    int& arenaH,
+    int& scrollX,
+    int& scrollY,
     std::string& err
 );

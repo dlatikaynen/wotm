@@ -1,5 +1,8 @@
--- TODO: the lua script should be able to get those from the host application
-local W, H = 512, 288
+local W, H = gfx.viewport()
+
+-- gfx.arena(W * 2, H) -- arena twice as wide as viewport
+-- initial scroll offset:
+-- gfx.scroll(0, 0)
 
 -- replay 2 draw commands per frame while loading
 gfx.commands_per_frame(2)

@@ -16,6 +16,8 @@ typedef struct Gamestate {
     int enteringLevel;
 
     SDL_Texture* texArena;
+    float scrollX;
+    float scrollY;
 
     // player1 state
     bool isPlayer1Local;

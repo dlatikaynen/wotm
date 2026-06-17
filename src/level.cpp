@@ -91,24 +91,39 @@ void level_begin(SDL_Renderer* r, Gamestate* state, int w, int h)
         g_surface = nullptr;
     }
 
-    g_w = w;
-    g_h = h;
-    g_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, w, h);
+    std::string err;
+
+    g_commandsPerFrame = 1;
+
+    int arenaW = w, arenaH = h;
+    int scrollX = 0, scrollY = 0;
+
+    if (!run_level_script(
+        "data/level1.lua",
+        w, h,
+        g_commands, g_light, g_commandsPerFrame,
+        arenaW, arenaH, scrollX, scrollY,
+        err
+    )) {
+        std::cerr << "Level " << state->enteringLevel << " script failed: " << err << "\n";
+        g_light = LevelLighting{};
+        arenaW = w;
+        arenaH = h;
+        scrollX = 0;
+        scrollY = 0;
+    }
+
+    g_w = arenaW;
+    g_h = arenaH;
+    state->scrollX = static_cast<float>(scrollX);
+    state->scrollY = static_cast<float>(scrollY);
+    g_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, arenaW, arenaH);
     g_cr = cairo_create(g_surface);
 
     // opaque so the surface is initially black
     cairo_set_source_rgb(g_cr, 0.0, 0.0, 0.0);
     cairo_paint(g_cr);
 
-    // sink for the lua draw commands
-    std::string err;
-
-    g_commandsPerFrame = 1;
-    if (!run_level_script("data/level1.lua", g_commands, g_light, g_commandsPerFrame, err))
-    {
-        std::cerr << "[level] script failed (" << err << ")\n";        
-        g_light = LevelLighting{};
-    }
 
     g_executed = 0;
     if (state->texArena != nullptr)
@@ -120,8 +135,8 @@ void level_begin(SDL_Renderer* r, Gamestate* state, int w, int h)
         r,
         SDL_PIXELFORMAT_ARGB8888,
         SDL_TEXTUREACCESS_STREAMING,
-        w,
-        h
+        arenaW,
+        arenaH
     );
 
     blit_to_texture(state);
@@ -182,7 +197,14 @@ void level_step(void* userData)
 
     if (state->texArena != nullptr)
     {
-        SDL_RenderTexture(renderer, state->texArena, nullptr, nullptr);
+        const SDL_FRect src = {
+            state->scrollX,
+            state->scrollY,
+            static_cast<float>(WINDOW_LOGICAL_WIDTH),
+            static_cast<float>(WINDOW_LOGICAL_HIGHT)
+        };
+
+        SDL_RenderTexture(renderer, state->texArena, &src, nullptr);
     }
 
     SDL_RenderPresent(renderer);

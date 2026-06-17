@@ -13,4 +13,6 @@ void reset_gamestate()
     }
     
     gamestate.texArena = nullptr;
+    gamestate.scrollX = 0.0f;
+    gamestate.scrollY = 0.0f;
 }

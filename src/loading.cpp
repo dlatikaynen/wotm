@@ -22,10 +22,16 @@ void loading_step(void *userData)
     if (state->texArena != nullptr)
     {
         const float levelAlpha = 0.1f;
+        const SDL_FRect src = {
+            state->scrollX,
+            state->scrollY,
+            static_cast<float>(WINDOW_LOGICAL_WIDTH),
+            static_cast<float>(WINDOW_LOGICAL_HIGHT)
+        };
 
         SDL_SetTextureBlendMode(state->texArena, SDL_BLENDMODE_BLEND);
         SDL_SetTextureAlphaMod(state->texArena, static_cast<Uint8>(levelAlpha * 255.0f));
-        SDL_RenderTexture(renderer, state->texArena, nullptr, nullptr);
+        SDL_RenderTexture(renderer, state->texArena, &src, nullptr);
         SDL_SetTextureAlphaMod(state->texArena, 255); // restore
     }
 

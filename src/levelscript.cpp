@@ -7,11 +7,13 @@
 #include FT_FREETYPE_H
 #include <sol/sol.hpp>
 
+#include <algorithm>
 #include <array>
 #include <cmath>
 #include <iostream>
 #include <map>
 #include <memory>
+#include <tuple>
 
 namespace
 {
@@ -32,8 +34,14 @@ namespace
         
         // default upper-left
         double sunRad = 135.0 * M_PI / 180.0;
-        
+
         int commandsPerFrame = 1;
+        int viewportW = 0;
+        int viewportH = 0;
+        int arenaW = 0;
+        int arenaH = 0;
+        int scrollX = 0;
+        int scrollY = 0;
     };
 
     SurfacePtr load_png_surface(const std::string& path)
@@ -463,6 +471,21 @@ namespace
         // recorded commands per frame >= 1
         g.set_function("commands_per_frame", [&rec](int n) { rec.commandsPerFrame = n > 0 ? n : 1; });
 
+        // viewport in px: local W, H = gfx.viewport()
+        g.set_function("viewport", [&rec]() { return std::make_tuple(rec.viewportW, rec.viewportH); });
+
+        // arena in px
+        g.set_function("arena", [&rec](int w, int h) {
+            rec.arenaW = w > rec.viewportW ? w : rec.viewportW;
+            rec.arenaH = h > rec.viewportH ? h : rec.viewportH;
+        });
+
+        // initial scroll offset
+        g.set_function("scroll", [&rec](int x, int y) {
+            rec.scrollX = x;
+            rec.scrollY = y;
+        });
+
         // fill the current path with base color (r,g,b) and bevel its edges with
         // highlight and shadow
         // depth = bevel width in px, intensity 0..1
@@ -540,9 +563,15 @@ namespace
 
 bool run_level_script(
     const std::string& path,
+    int viewportW,
+    int viewportH,
     std::vector<DrawCmd>& out,
     LevelLighting& light,
     int& commandsPerFrame,
+    int& arenaW,
+    int& arenaH,
+    int& scrollX,
+    int& scrollY,
     std::string& err
 ) {
     out.clear();
@@ -555,6 +584,10 @@ bool run_level_script(
         lua.open_libraries(sol::lib::base, sol::lib::math, sol::lib::table, sol::lib::string);
 
         Recorder rec{out, light};
+        rec.viewportW = viewportW;
+        rec.viewportH = viewportH;
+        rec.arenaW = viewportW;
+        rec.arenaH = viewportH;
 
         register_gfx(lua, rec);
 
@@ -572,6 +605,10 @@ bool run_level_script(
         }
 
         commandsPerFrame = rec.commandsPerFrame;
+        arenaW = rec.arenaW;
+        arenaH = rec.arenaH;
+        scrollX = std::clamp(rec.scrollX, 0, std::max(0, arenaW - viewportW));
+        scrollY = std::clamp(rec.scrollY, 0, std::max(0, arenaH - viewportH));
     }
     catch (const std::exception& e)
     {
