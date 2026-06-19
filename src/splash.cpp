@@ -459,7 +459,7 @@ void splash_step(void *userData)
                         {
                             state->screen = WOTM_SCREEN_LODING;
                             state->enteringLevel = 1;
-                            
+
                             break;
                         }
 

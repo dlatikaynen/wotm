@@ -1,11 +1,12 @@
-There are 85 Levels. Players take turns. Side is randomized. Three hearts in the hud on either side but they are meaningless
+There are 85 Levels from the blooDot universe, but in "side-scrolling" mode.
+Players take turns. Side is randomized. Three hearts in the hud on either side but they are meaningless
 and without function but when they're hit often enough the player of that side dies, regardless of who fired.
 Players who have personnel on the ground cannot fire their primary weapon unless at least one personnel returns.
 If all personnel dies, level is lost by that side.
 
-LEVEL (1) H Hydrogen
+LEVEL (1) H Hydrogen *Voyage, voyage*
 
-The center of the screen is a gravity mirror. 
+The center of the screen is a linear gravity monopole, a glossy black thin monolithic crystal bar.
 The level looks like a meadow with sky on both sides.
 On the outermost left and right corners, the ground forms two perfect circles.
 The interiors are hollow and contain the nucleus symbols (both viewer's-perspective "up")
@@ -19,10 +20,10 @@ Element cube is buried at the midpoint.
 Which is serendipitous given that the letter H is symmetrical along the horizon.
 
 
-LEVEL (2) He Helium
+LEVEL (2) He Helium *Dead heat in a Zeppelin race*
 
 Mountain. Dusk. Ammo too weak to eat away at any reasonable pace. Direct hits are possible but not feasible.
-Instead, there is a parachuted crate with a lensor, which is kept at height by a large helium-filled balloon.
+Instead, there is a parachuted crate with a lensor, which is kept at height by a helium-filled blip, on each side.
 Pseudorandomwalking wind moves the balloon-parachute-crates horizontally.
 Both players stand on an explosive barrel in a valley, immobilized.
 A highly flammable tumbleweed is suspended on a nearby hill (the slope of which reaches the player) in equilibrium on a much smaller balloon.
@@ -37,7 +38,7 @@ it can blow up the opposite player.
 Element cube is hovering in a third balloon at the centerline far above the top screen border.
 
 
-LEVEL (3) Li Lithium
+LEVEL (3) Li Lithium *Zombie*
 Silvery-white. Solid at room temperature. Soft alkali metal.
 Least dense solid element; floats on oil. Used in rechargeable batteries and mood-stabilizing drugs.
 
@@ -45,12 +46,12 @@ Least dense solid element; floats on oil. Used in rechargeable batteries and moo
 (LEVEL (4) does not exist because it is combined Al+Be)
 
 
-LEVEL (5) B Boron
+LEVEL (5) B Boron *Moron*
 Black-brown. Solid. Metalloid.
 Extremely hard, poor conductor. Used in borosilicate glass, detergents (borax), and neutron-absorbing control rods.
 
 
-LEVEL (6) C Carbon
+LEVEL (6) C Carbon *You carry all you lack*
 Black (graphite) to colorless (diamond). Solid. Nonmetal.
 Forms more compounds than any other element; allotropes range from soft graphite to hardest diamond. Basis of all life and of steel.
 
@@ -60,7 +61,7 @@ Colorless. Gaseous. Nonmetal.
 Inert diatomic gas making up 78% of air; liquefies very cold. Used in fertilizers (ammonia) and as a cryogenic coolant.
 
 
-LEVEL (8) O Oxygen
+LEVEL (8) O Oxygen *Breathe*
 Colorless (pale blue as liquid). Gaseous. Nonmetal.
 Highly reactive, supports combustion and respiration. Second most abundant gas in air; essential for breathing and steelmaking.
 
@@ -85,12 +86,17 @@ Silvery-white. Solid. Alkaline-earth metal.
 Burns with a brilliant white light; very lightweight. Used in flares, fireworks, and lightweight alloys.
 
 
-LEVEL (13) Al Aluminium
+LEVEL (13) Al Aluminium *Soft in the middle*
 Silvery-grey. Solid. Metal.
 Light, corrosion-resistant, excellent conductor. Most abundant metal in the crust; used in cans, foil, and aircraft.
 → joint with (4) Be Beryllium
 Steel-grey. Solid. Hard, light alkaline-earth metal.
 Transparent to X-rays and very stiff for its weight. Used in aerospace alloys and X-ray windows; toxic dust.
+
+A pink drywall room with a dark slim door opening to the left. Back wall lit from above by two lightcones.
+Bat hangs from ceiling.
+Two chairs where the players sit. between them, a huge cylinder of Be with soft Al in the middle.
+The surprise: when player 1 fires, player 2 actually does it and vice versa.
 
 
 LEVEL (14) Si Silicon
@@ -153,7 +159,7 @@ Silvery-grey. Solid. Transition metal.
 Hard and very brittle. Essential for making steel tough and for alkaline batteries.
 
 
-LEVEL (26) Fe Iron
+LEVEL (26) Fe Iron *This corrosion*
 Silvery-grey. Solid. Transition metal.
 Magnetic, abundant, rusts in moist air. Most-used metal; backbone of steel and the Earth's core.
 
@@ -173,7 +179,7 @@ Reddish-orange. Solid. Transition metal.
 Excellent conductor of heat and electricity, antimicrobial. Used in wiring, pipes, and (with tin) bronze.
 
 
-LEVEL (30) Zn Zinc
+LEVEL (30) Zn Zinc **Twin exit**
 Bluish-silver. Solid. Transition metal.
 Corrosion-resistant coating metal. Used to galvanize steel and in brass and batteries.
 
@@ -448,6 +454,6 @@ Silvery-grey. Solid. Metalloid.
 Intensely radioactive; emits enough energy to glow and self-heat. Used in anti-static devices and as a notorious poison.
 
 
-LEVEL (85) At Astatine
+LEVEL (85) At Astatine *The bad one*
 Presumed metallic/dark (never seen in bulk). Solid (estimated). Metalloid (halogen).
 Rarest naturally occurring element; intensely radioactive and so short-lived it has never been seen with the eye. Studied for targeted cancer radiotherapy.

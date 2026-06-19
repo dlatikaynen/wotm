@@ -68,12 +68,14 @@ target_link_options(
     "-sUSE_SDL=3"
     "-sUSE_SDL_TTF=3"
     "-sUSE_ZLIB=1"
+    "-sINITIAL_MEMORY=67108864"
+    "-sALLOW_MEMORY_GROWTH=1"
 )
 
 # emscripten has no sdl3_mixer or sdl3_image port (only sdl3 + sdl3_ttf exist), so
 # -sUSE_SDL_MIXER=3 / -sUSE_SDL_IMAGE=3 are silently ignored. our own wasm builds
 # must come before the SDL=3 port on the link line so wasm-ld resolves
-# MIX_*/IMG_* here and their SDL* deps fall through to the port.
+# MIX_*/IMG_* here and their SDL* deps fall through to the port
 target_link_libraries(
     wotm PRIVATE
     C:/en/Emscripten/Release/lib/libSDL3_image.a

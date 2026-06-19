@@ -1,7 +1,8 @@
 #pragma once
 
-constexpr const int WINDOW_LOGICAL_WIDTH = 512;
-constexpr const int WINDOW_LOGICAL_HIGHT = 288;
+// divine screen resolution, heretical number of colors
+constexpr const int WINDOW_LOGICAL_WIDTH = 640;
+constexpr const int WINDOW_LOGICAL_HIGHT = 480;
 constexpr const int WINDOW_PADDING = 6;
 
 constexpr const int WOTM_SCREEN_SPLASH = 1;

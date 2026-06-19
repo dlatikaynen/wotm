@@ -170,6 +170,11 @@ namespace
         {
             SDL_SetTextureBlendMode(tex, SDL_BLENDMODE_BLEND_PREMULTIPLIED);
         }
+        else
+        {
+            std::cerr << "[level] SDL_CreateTexture failed for "
+                      << layer.w << "x" << layer.h << ": " << SDL_GetError() << "\n";
+        }
 
         return tex;
     }
@@ -222,8 +227,9 @@ void level_begin(SDL_Renderer* r, Gamestate* state, int w, int h)
     destroy_layer(g_fg);
     g_commandsPerFrame = 1;
     if (!run_level_script(
-        "data/level1.lua",
-        w, h,
+        std::format("data/level{:02d}.lua", state->enteringLevel),
+        w,
+        h,
         background,
         arena,
         foreground,
