@@ -1,4 +1,5 @@
 #include "inc/splash.h"
+#include "inc/platform.h"
 #include <cmath>
 #include <cstdlib>
 #include <vector>
@@ -6,6 +7,7 @@
 #include <cairo.h>
 #include <cairo-ft.h>
 #include <ft2build.h>
+#include <format>
 #include FT_FREETYPE_H
 
 // [dlatikay 20260616] the abysmal architecture decisions in these source files
@@ -459,6 +461,20 @@ void splash_step(void *userData)
                         {
                             state->screen = WOTM_SCREEN_LODING;
                             state->enteringLevel = 1;
+
+                            break;
+                        }
+
+                        case SDL_SCANCODE_A:
+                        {
+                            const auto& cli = detect_client_info();
+
+                            SDL_ShowSimpleMessageBox(
+                                SDL_MESSAGEBOX_ERROR,
+                                "Error",
+                                std::format("{} has experienced an error and needs to close. Did you drop your {} into a reactor core?", cli.browser, cli.deviceType).c_str(),
+                                window
+                            );
 
                             break;
                         }

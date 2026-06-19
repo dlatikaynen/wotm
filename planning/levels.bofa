@@ -75,10 +75,17 @@ LEVEL (10) Ne Neon
 Colorless. Gaseous. Noble gas.
 Chemically inert; glows red-orange when electrified. Used in advertising signs and high-voltage indicators.
 
+A row of skyscrapers at nighttime, against a backdrop of night sky.
+Shops on the ground floors have neon signs. There is a pubär graffiti on one wall.
+The players are standing on flat roofs amd wear a gorilla costume.
+Their ammo are oversized yellow bananas.
 
-LEVEL (11) Na Sodium
+
+LEVEL (11) Na Sodium *Doused*
 Silvery-white. Solid. Soft alkali metal.
 Reacts violently with water, can be cut with a knife. Used in street lamps and as table salt (sodium chloride).
+
+
 
 
 LEVEL (12) Mg Magnesium
@@ -453,7 +460,14 @@ LEVEL (84) Po Polonium
 Silvery-grey. Solid. Metalloid.
 Intensely radioactive; emits enough energy to glow and self-heat. Used in anti-static devices and as a notorious poison.
 
+Personnel wears PPE that gradually deteriorates, ending up as glowing skeletons.
+
 
 LEVEL (85) At Astatine *The bad one*
 Presumed metallic/dark (never seen in bulk). Solid (estimated). Metalloid (halogen).
-Rarest naturally occurring element; intensely radioactive and so short-lived it has never been seen with the eye. Studied for targeted cancer radiotherapy.
+Rarest naturally occurring element; intensely radioactive and so short-lived it has never been seen with the eye.
+Any sizable amount would self-destruct, obliterating its immediate surroundings.
+
+Explodes immediately before even the players enter, and crashes the browser 
+("<browsername> has experienced an error and needs to close. Did you drop your <device/computer> into a reactor core?")
+leaving only high-pitched ringing that slowly fades.
