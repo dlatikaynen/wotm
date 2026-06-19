@@ -126,6 +126,8 @@ function gfx.fill() end
 function gfx.fill_preserve() end
 function gfx.stroke() end
 function gfx.stroke_preserve() end
+
+---paints the entire surface with the current fill
 function gfx.paint() end
 
 ---@param a number Alpha 0..1

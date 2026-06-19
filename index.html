@@ -115,7 +115,6 @@
 
       #controls {
         display: inline-block;
-        float: right;
         vertical-align: top;
         margin-top: 30px;
         margin-right: 20px
@@ -175,10 +174,11 @@
       (function () {
         var last = null;
         setInterval(function () {
-          fetch("wotm.wasm", { method: "HEAD", cache: "no-store" })
-            .then(function (r) {
-              var stamp = r.headers.get("last-modified") || r.headers.get("etag");
-              if (!stamp) return;
+          fetch("reload-stamp.txt", { cache: "no-store" })
+            .then(function (r) { return r.ok ? r.text() : null; })
+            .then(function (stamp) {
+              if (stamp == null) return;
+              stamp = stamp.trim();
               if (last && stamp !== last) location.reload();
               last = stamp;
             })

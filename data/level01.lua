@@ -4,121 +4,63 @@ local W, H = gfx.viewport()
 -- initial scroll offset:
 -- gfx.scroll(0, 0)
 
--- replay 2 draw commands per frame while loading
 gfx.commands_per_frame(2)
 
+--(1) background
+
 -- sky: vertical gradient
-gfx.linear(0, 0, 0, H, {
-  { 0.0, 0.04, 0.05, 0.12 },
-  { 1.0, 0.18, 0.13, 0.24 },
+gfx.linear(0, 0, 0, H / 2, {
+  { 0.0, 0.18, 0.13, 0.24 },
+  { 1.0, 0.04, 0.05, 0.12 }
 })
 
-gfx.paint()
-
--- stars
-for i = 1, 90 do
-  local x = (i * 97) % W
-  local y = (i * 53) % 150
-  gfx.rgba(1.0, 0.97, 0.85, 0.35 + (i % 5) * 0.12)
-  gfx.circle(x, y, 0.5 + (i % 3) * 0.4)
-  gfx.fill()
-end
-
--- moon
-gfx.image("data/logo-ki-064.png", 372, 24, { alpha = 0.9, scale = 0.55 })
-
--- halo
-gfx.save()
-gfx.new_sub_path()
-gfx.arc(400, 55, 40, 0, 2 * math.pi)
-gfx.clip_preserve()
-gfx.radial(400, 55, 4, 400, 55, 40, {
-  { 0.0, 1.0, 0.95, 0.80, 0.9 },
-  { 1.0, 1.0, 0.95, 0.80, 0.0 },
-})
-gfx.fill_preserve()
-gfx.paint_alpha(0.5)
-gfx.clip()
-gfx.reset_clip()
-gfx.restore()
-
--- arcs
-gfx.rgba(0.9, 0.9, 1.0, 0.5)
-gfx.line_width(1.5)
-gfx.line_cap("square")
-gfx.line_join("round")
-gfx.arc(256, 40, 30, 0.2, 1.4)
-gfx.stroke()
-gfx.arc_neg(256, 40, 24, 1.4, 0.2)
-gfx.stroke_preserve()
-gfx.new_path()
-
--- transforms
-gfx.save()
-gfx.translate(64, 70)
-gfx.rotate(0.4)
-gfx.scale(1.2, 1.2)
-gfx.operator("screen")
-gfx.line_width(2.0)
-gfx.line_cap("round")
-gfx.line_join("bevel")
-gfx.rgba(0.6, 0.8, 1.0, 0.8)
-gfx.new_path()
-gfx.move_to(-20, 0)
-gfx.rel_line_to(20, -16)
-gfx.curve_to(30, 4, -30, 4, -20, 0)
-gfx.close()
-gfx.stroke()
-gfx.operator("over")
-gfx.identity()
-gfx.restore()
-
-gfx.ambient(0.90, 0.90, 0.95)
-gfx.light(400, 55, 150, 1.0, 0.95, 0.80, 1.0) -- moon
-
-gfx.nextlayer()
-
--- ground
-gfx.sun(135)
-gfx.move_to(0, H)
-for x = 0, W, 6 do
-  local y = 200 + math.sin(x * 0.025) * 14 + math.sin(x * 0.011 + 1.3) * 22
-  gfx.line_to(x, y)
-end
-gfx.line_to(W, H)
-gfx.close()
-gfx.lit_fill(0.12, 0.32, 0.18, 3, 0.5)
-
--- platform
-gfx.sun(100)
-gfx.rounded_rect(150, 158, 130, 26, 8)
-gfx.lit_fill(0.42, 0.36, 0.30, 3, 0.6)
-gfx.ambient(0.85, 0.85, 0.90)
-gfx.light(215, 158, 90, 1.0, 0.70, 0.30, 0.9)
-
-gfx.nextlayer()
-
--- lattice
-gfx.image_pattern("data/logo-ki-032.png", true)
-gfx.rectangle(24, 206, 96, 60)
+gfx.rectangle(0, 0, W, H / 2)
 gfx.fill()
 
--- text
-gfx.font("data/yoster.ttf")
-gfx.rgb(0.95, 0.85, 0.30)
-gfx.text("Hydrogen", 150, 60, 30)
+gfx.linear(0, H / 2, 0, H, {
+  { 0.0, 0.04, 0.05, 0.12 },
+  { 1.0, 0.18, 0.13, 0.24 }
+})
 
--- lit glyph
-gfx.font("data/yoster.ttf")
-gfx.sun(90)
-gfx.text_path("Y", 360, 250, 70)
-gfx.lit_fill(0.62, 0.12, 0.12, 4, 0.7)
+gfx.rectangle(0, H/2, W, H)
+gfx.fill()
 
--- glyph
-gfx.font("data/yoster.ttf")
-gfx.rgb(0.8, 0.9, 1.0)
-gfx.glyph(string.byte("O"), 470, 280, 24)
+--(2) foreground: the v'ger representation of our first element
+gfx.nextlayer()
 
--- lighting
-gfx.ambient(0.95, 0.95, 1.0)
-gfx.light(190, 50, 120, 1.0, 0.95, 0.60, 0.8) -- glow on the title
+local TAU = 2 * math.pi
+local d = 0.31 * W       -- diameter
+local ro = d / 2         -- outer radius
+local wall = 31          -- wall+bar thickness
+local ri = ro - wall     -- inner radius
+local cy = H / 2
+local mgn = 0.02 * W     -- distance from screen horizontally
+local cx1 = mgn + ro     -- l circle center x
+local cx2 = W - mgn - ro -- r circle center
+
+-- how far up from where the bar joins the circle is the outline
+local a = math.asin((wall / 2) / ro)
+
+gfx.new_path()
+
+-- circles
+gfx.new_sub_path()
+gfx.arc(cx1, cy, ro, a, TAU - a) -- left lobe
+gfx.arc(cx2, cy, ro, a - math.pi, math.pi - a) --upper bar edge+right lobe
+gfx.close()
+
+-- wind right so they have holes
+gfx.new_sub_path()
+gfx.arc_neg(cx1, cy, ri, TAU, 0)
+gfx.new_sub_path()
+gfx.arc_neg(cx2, cy, ri, TAU, 0)
+
+--paint it black!
+gfx.image_pattern("data/level-assets/seamless-dirt.png", true)
+gfx.fill_preserve()
+gfx.rgb(0, 0, 0)
+gfx.line_width(1.5)
+gfx.stroke()
+
+--gfx.ambient(0.95, 0.95, 1.0)
+--
