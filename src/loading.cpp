@@ -1,6 +1,18 @@
 #include "inc/loading.h"
 #include "inc/level.h"
 #include <algorithm>
+#include <format>
+
+namespace
+{
+    TTF_Text* labelLoadingLevel = nullptr;
+    int labelLoadingLevelW = 0;
+    int labelLoadingLevelH = 0;
+
+    TTF_Text* labelLevelName = nullptr;
+    int labelLevelNameW = 0;
+    int labelLevelNameH = 0;
+}
 
 void loading_step(void *userData)
 {
@@ -24,6 +36,7 @@ void loading_step(void *userData)
     const float vw = static_cast<float>(WINDOW_LOGICAL_WIDTH);
     const float vh = static_cast<float>(WINDOW_LOGICAL_HIGHT);
 
+    // the compositing level shows through from below, faintly
     if (state->texBackground != nullptr)
     {
         const SDL_FRect src = {state->bgScrollX, state->bgScrollY, vw, vh};
@@ -92,6 +105,51 @@ void loading_step(void *userData)
 
         // restore
         SDL_SetTextureAlphaMod(texLogo, 255);
+
+        // in addition to the logo, we show what's loading
+        if (labelLoadingLevel == nullptr && fredoka != nullptr)
+        {
+            labelLoadingLevel = TTF_CreateText(
+                textEngine,
+                poppins,
+                std::format("Loading level {}", state->enteringLevel).c_str(),
+                0
+            );
+
+            TTF_SetTextColor(labelLoadingLevel, 139, 139, 139, 255);            
+            TTF_GetTextSize(labelLoadingLevel, &labelLoadingLevelW, &labelLoadingLevelH);
+        }
+
+        if (labelLevelName == nullptr && fredoka != nullptr)
+        {
+            labelLevelName = TTF_CreateText(
+                textEngine,
+                fredoka,
+                "Dead heat in a Zeppelin race",
+                0
+            );
+
+            TTF_SetTextColor(labelLevelName, 39, 39, 139, 255);
+            TTF_GetTextSize(labelLevelName, &labelLevelNameW, &labelLevelNameH);
+        }
+
+        if (labelLoadingLevel != nullptr)
+        {
+            TTF_DrawRendererText(
+                labelLoadingLevel,
+                WINDOW_LOGICAL_WIDTH / 2 - labelLoadingLevelW / 2, 
+                WINDOW_LOGICAL_HIGHT / 2 - logoH / 2 - 3 * CONTROL_DISTANCE - labelLoadingLevelH / 2 
+            );
+        }
+
+        if (labelLevelName != nullptr)
+        {
+            TTF_DrawRendererText(
+                labelLevelName,
+                WINDOW_LOGICAL_WIDTH / 2 - labelLevelNameW / 2,
+                WINDOW_LOGICAL_HIGHT / 2 + logoH / 2 + 3 * CONTROL_DISTANCE - labelLevelNameH / 2
+            );
+        }
     }
 
     SDL_RenderPresent(renderer);
@@ -105,8 +163,22 @@ void loading_step(void *userData)
         state->screen = WOTM_SCREEN_LEVEL;
 
         // re-init on the next load
+        loading_cleanup();
         started = false;
 
         return;
+    }
+}
+
+void loading_cleanup()
+{
+    if (labelLoadingLevel != nullptr)
+    {
+        TTF_DestroyText(labelLoadingLevel);
+    }
+
+    if (labelLevelName != nullptr)
+    {
+        TTF_DestroyText(labelLevelName);
     }
 }

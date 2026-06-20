@@ -8,6 +8,7 @@ extern SDL_Texture *texLogo;
 extern SDL_Texture *texLogoGray;
 extern SDL_Texture *texLogoSm;
 extern TTF_Font *fredoka;
+extern TTF_Font *poppins;
 extern TTF_TextEngine *textEngine;
 extern TTF_Text *slogan;
 extern TTF_Text *alabel;

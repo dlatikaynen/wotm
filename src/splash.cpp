@@ -436,6 +436,12 @@ void splash_step(void *userData)
     SDL_RenderPresent(renderer);
     state->i += 0.1;
 
+
+    // temp
+    state->screen = WOTM_SCREEN_LODING;
+    state->enteringLevel = 1;
+
+
     SDL_Event event{};
     while (SDL_PollEvent(&event))
     {

@@ -249,7 +249,7 @@ int main()
         << SDL_VERSIONNUM_MICRO(ttfVersion) 
         << std::endl;
 
-    fredoka = TTF_OpenFont("data/freckleface-regular-show.ttf", 32);
+    fredoka = TTF_OpenFont("data/freckleface-regular-show.ttf", FONT_SIZE_TITLES);
     if (fredoka == nullptr)
     {
         const auto& error = SDL_GetError();
@@ -281,7 +281,7 @@ int main()
         return 89;
     }
 
-    poppins = TTF_OpenFont("data/Poppins-Regular.ttf", 12);
+    poppins = TTF_OpenFont("data/Poppins-Regular.ttf", FONT_SIZE_DIALOG);
     if (poppins == nullptr)
     {
         const auto& error = SDL_GetError();

@@ -8,7 +8,7 @@ gfx.commands_per_frame(2)
 
 --(1) background
 
--- sky: vertical gradient
+--backdrop: surrealist vertical gradient
 gfx.linear(0, 0, 0, H / 2, {
   { 0.0, 0.18, 0.13, 0.24 },
   { 1.0, 0.04, 0.05, 0.12 }
@@ -25,13 +25,16 @@ gfx.linear(0, H / 2, 0, H, {
 gfx.rectangle(0, H/2, W, H)
 gfx.fill()
 
+--cube is hidden smack center
+gfx.image("data/level-assets/chel/cr.png", W/2 - 17, H/2 - 16)
+
 --(2) foreground: the v'ger representation of our first element
 gfx.nextlayer()
 
 local TAU = 2 * math.pi
 local d = 0.31 * W       -- diameter
 local ro = d / 2         -- outer radius
-local wall = 31          -- wall+bar thickness
+local wall = 32          -- wall+bar thickness
 local ri = ro - wall     -- inner radius
 local cy = H / 2
 local mgn = 0.02 * W     -- distance from screen horizontally

@@ -1,0 +1,26 @@
+Overall interaction and control concept:
+
+There are 84+1 levels to be played in sequence (mostly).
+Two players are needed. They can take play on the same device,
+or play in a connected session. They don't necessarily need to take turns,
+except in levels where there is no ground personnel involved.
+
+The main menu on splash:
+- new game
+- join game
+- load game
+- control
+- language
+- audio
+- help
+- exit
+
+The level menu:
+- resume
+- leave (only multiplayer)
+- restart
+- save
+- control
+- language
+- audio
+- exit to main
