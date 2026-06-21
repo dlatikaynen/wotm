@@ -26,7 +26,7 @@ namespace
         synth::Waveform wave;
     };
 
-    constexpr int QUEUE_CAP = 2 ^ 8;
+    constexpr int QUEUE_CAP = 1 << 8;
     constexpr int QUEUE_MASK = QUEUE_CAP - 1;
 
     struct Voice

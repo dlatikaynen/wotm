@@ -222,6 +222,9 @@ int main()
                 MIX_PlayTrack(track1, options);
                 SDL_DestroyProperties(options);
                 MIX_SetTrackGain(track1, 0.8);
+                
+                // temporarily
+                MIX_StopTrack(track1, 0);
             }
         }
     }
