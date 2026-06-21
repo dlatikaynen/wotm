@@ -1,5 +1,6 @@
 #include "inc/splash.h"
 #include "inc/platform.h"
+#include "inc/synth.h"
 #include <cmath>
 #include <cstdlib>
 #include <vector>
@@ -374,6 +375,45 @@ namespace
 
         return tex;
     }
+
+    int scancode_to_note(SDL_Scancode sc)
+    {
+        switch (sc)
+        {
+            case SDL_SCANCODE_Z: return 60; // C4
+            case SDL_SCANCODE_S: return 61; // C#4
+            case SDL_SCANCODE_X: return 62; // D4
+            case SDL_SCANCODE_D: return 63; // D#4
+            case SDL_SCANCODE_C: return 64; // E4
+            case SDL_SCANCODE_V: return 65; // F4
+            case SDL_SCANCODE_G: return 66; // F#4
+            case SDL_SCANCODE_B: return 67; // G4
+            case SDL_SCANCODE_H: return 68; // G#4
+            case SDL_SCANCODE_N: return 69; // A4 (440 Hz)
+            case SDL_SCANCODE_J: return 70; // A#4
+            case SDL_SCANCODE_M: return 71; // B4
+            case SDL_SCANCODE_COMMA: return 72; // C5
+
+            case SDL_SCANCODE_Q: return 72; // C5
+            case SDL_SCANCODE_2: return 73; // C#5
+            case SDL_SCANCODE_W: return 74; // D5
+            case SDL_SCANCODE_3: return 75; // D#5
+            case SDL_SCANCODE_E: return 76; // E5
+            case SDL_SCANCODE_R: return 77; // F5
+            case SDL_SCANCODE_5: return 78; // F#5
+            case SDL_SCANCODE_T: return 79; // G5
+            case SDL_SCANCODE_6: return 80; // G#5
+            case SDL_SCANCODE_Y: return 81; // A5
+            case SDL_SCANCODE_7: return 82; // A#5
+            case SDL_SCANCODE_U: return 83; // B5
+            case SDL_SCANCODE_I: return 84; // C6
+
+            default:                      
+                return -1;
+        }
+    }
+
+    synth::Waveform splashWaveform = synth::Waveform::Saw;
 }
 
 void splash_step(void *userData)
@@ -437,9 +477,9 @@ void splash_step(void *userData)
     state->i += 0.1;
 
 
-    // temp
-    state->screen = WOTM_SCREEN_LODING;
-    state->enteringLevel = 1;
+    // temp debugging aid: go straight into a level
+    // state->screen = WOTM_SCREEN_LODING;
+    //state->enteringLevel = 1;
 
 
     SDL_Event event{};
@@ -485,9 +525,37 @@ void splash_step(void *userData)
                             break;
                         }
 
-                        default:
+                        case SDL_SCANCODE_TAB:
+                        {
+                            const int next = (static_cast<int>(splashWaveform) + 1) % static_cast<int>(synth::Waveform::COUNT);
+                            splashWaveform = static_cast<synth::Waveform>(next);
+                            synth::set_waveform(splashWaveform);
+
                             break;
+                        }
+
+                        default:
+                        {
+                            const int note = scancode_to_note(event.key.scancode);
+                            if (note >= 0)
+                            {
+                                synth::note_on(note);
+                            }
+
+                            break;
+                        }
                     }
+                }
+
+                break;
+            }
+            case SDL_EVENT_KEY_UP:
+            {
+                const int note = scancode_to_note(event.key.scancode);
+                
+                if (note >= 0)
+                {
+                    synth::note_off(note);
                 }
 
                 break;

@@ -13,6 +13,7 @@
 #include "inc/gfxutil.h"
 #include "inc/gamestate.h"
 #include "inc/scripting.h"
+#include "inc/synth.h"
 
 // globals are defined here and declared extern in main.h
 SDL_Window *window;
@@ -239,9 +240,16 @@ int main()
         return 91;
     }
 
+    // wave synthesizer, riding its own logical stream on the default device
+    // alongside the MIX_ music track above. non-fatal if it can't open.
+    if (!synth::init())
+    {
+        std::cout << "Synthesizer unavailable, continuing without it\n";
+    }
+
     const auto& ttfVersion = TTF_Version();
-    std::cout 
-        << "Font library version " 
+    std::cout
+        << "Font library version "
         << SDL_VERSIONNUM_MAJOR(ttfVersion) 
         << "."
         << SDL_VERSIONNUM_MINOR(ttfVersion) 
@@ -368,6 +376,7 @@ void cleanup()
     TTF_CloseFont(yoster);
     TTF_CloseFont(poppins);
     TTF_Quit();
+    synth::shutdown();
     MIX_Quit();
     SDL_Quit();
 }
